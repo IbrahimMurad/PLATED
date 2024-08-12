@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'curriculum',
-    'subjects.apps.SubjectsConfig'
+    'subjects.apps.SubjectsConfig',
+    'questions.apps.QuestionsConfig',
+    'nested_admin',
 ]
 
 MIDDLEWARE = [

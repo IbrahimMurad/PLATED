@@ -22,6 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('subject/', include('subjects.urls')),
+    path(r'^_nested_admin/', include('nested_admin.urls')),
 ]
 
 if settings.DEBUG:

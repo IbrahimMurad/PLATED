@@ -1,0 +1,81 @@
+
+body {
+    box-sizing: border-box;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 450;
+}
+
+.card {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 8px 7px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    box-shadow: 5px 6px 8px 7px rgba(0, 0, 0, 0.24);
+    transform: translate(-3px, -3px);
+}
+
+.card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #025caf;
+}
+
+.card-text {
+    margin-bottom: 20px;
+}
+
+.lesson, .exam {
+    margin: 50px 0;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.lesson-title {
+    color: #025caf;
+    font-weight: bold;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+.lesson-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #858383;
+}
+
+.lesson h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.generate-button {
+    position: relative;
+    top: 10px;
+}
+
+dd {
+    position: relative;
+    top: 10px;
+    text-indent: 1cm;
+}
+
+dt {
+    font-weight: bold;
+}
+
+.equation {
+    font-size: 1.25em;
+    font-weight: bolder;
+    position: relative;
+    top: 10px;
+    text-align: center;
+}
