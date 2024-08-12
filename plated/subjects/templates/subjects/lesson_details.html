@@ -1,0 +1,58 @@
+<!-- curriculum.html -->
+{% extends "subjects/base.html" %}
+
+{% csrf_token %}
+{% block content %}
+<div class="container mt-4">
+    <article class="lesson">
+        <div>
+            <small>
+            <a href="{% url "units-list" lesson.chapter.unit.subject.id %}" style="color:grey;"> {{ lesson.chapter.unit.subject.name }} </a>
+            ><a href="{% url "chapters-list" lesson.chapter.unit.id %}" style="color:grey;"> {{ lesson.chapter.unit.title }}</a>
+            ><a href="{% url "lessons-list" lesson.chapter.id %}" style="color:grey;"> {{ lesson.chapter.title }}</a>
+            </small>
+        </div>
+        <section class="lesson-title">
+            <h1 class="">{% if lesson.number > 0 %} Lesson {{ lesson.number }} : {% endif %}{{ lesson.title }}</h1>
+        </section>
+        <section class="lesson">
+            <div class="lesson-header">
+                <h3>Intro</h3>
+                <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#introContent" aria-expanded="false" aria-controls="introContent">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+            <div id="introContent" class="lesson-content collapse show">
+                <p>{{ lesson.intro }}</p>
+            </div>
+        </section>
+        <section class="lesson">
+            <div class="lesson-header">
+                <h3>Goals</h3>
+                <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#goalsContent" aria-expanded="false" aria-controls="goalsContent">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+            <div id="goalsContent" class="lesson-content collapse show">
+                <p>{{ lesson.goals|safe }}</p>
+            </div>
+        </section>
+        <section class="lesson">
+            <div class="lesson-header">
+                <h3>Details</h3>
+                <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#detailsContent" aria-expanded="false" aria-controls="detailsontent">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+            <div id="detailsContent" class="lesson-content collapse show">
+                <p>{{ lesson.details|safe }}</p>
+            </div>
+        </section>
+        <form method="POST" class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Generate Exam</button>
+        </form>
+    </article>
+    <article class="exam">
+    </article>
+</div>
+{% endblock %}

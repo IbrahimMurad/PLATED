@@ -1,0 +1,23 @@
+<!-- curriculum.html -->
+{% extends "subjects/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Loop through each chapter in the unit -->
+        {% for chapter in chapters %}
+            <div class="col-md-4 mb-4">
+                <a class="nav-item nav-link" href="{% url "lessons-list" chapter.id %}">
+                    <div class="card">
+                        <img src="{{ chapter.cover.url }}" class="card-img-top" alt="{{ chapter.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">Chapter {{ chapter.number }}: {{ chapter.title }}</h5>
+                            <p class="card-text">{{ chapter.caption }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

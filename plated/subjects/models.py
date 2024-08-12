@@ -18,7 +18,7 @@ class Unit(models.Model):
     """ units table """
     number = models.SmallIntegerField()
     title = models.CharField(max_length=128)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, related_name='units', on_delete=models.CASCADE)
     cover = models.ImageField(default='default.jpg', upload_to='unit_covers')
     caption = models.TextField(null=True, blank=True)
 
@@ -30,7 +30,7 @@ class Chapter(models.Model):
     """ chapters table """
     number = models.SmallIntegerField()
     title = models.CharField(max_length=128)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, related_name='chapters', on_delete=models.CASCADE)
     cover = models.ImageField(default='default.jpg', upload_to='chapter_covers')
     caption = models.TextField(null=True, blank=True)
 
@@ -41,9 +41,10 @@ class Chapter(models.Model):
 class Lesson(models.Model):
     """ lessons table """
     updated_at = models.DateTimeField(auto_now=True)
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, related_name='lessons', on_delete=models.CASCADE)
     number = models.SmallIntegerField()
     title = models.CharField(max_length=128)
+    caption = models.TextField(null=True, blank=True)
     intro = models.TextField(null=True, blank=True)
     goals = models.TextField(null=True, blank=True)
     details = models.TextField(null=True, blank=True)

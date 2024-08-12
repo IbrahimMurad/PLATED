@@ -1,0 +1,23 @@
+<!-- curriculum.html -->
+{% extends "subjects/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Loop through each subject -->
+        {% for subject in subjects %}
+            <div class="col-md-4 mb-4">
+                <a class="nav-item nav-link" href="{% url "units-list" subject.id %}">
+                    <div class="card">
+                        <img src="{{ subject.cover_pic.url }}" class="card-img-top" alt="{{ subject.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ subject.name }}</h5>
+                            <p class="card-text">{{ subject.caption }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
