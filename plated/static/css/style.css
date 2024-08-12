@@ -56,3 +56,26 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
 }
+
+.generate-button {
+    position: relative;
+    top: 10px;
+}
+
+dd {
+    position: relative;
+    top: 10px;
+    text-indent: 1cm;
+}
+
+dt {
+    font-weight: bold;
+}
+
+.equation {
+    font-size: 1.25em;
+    font-weight: bolder;
+    position: relative;
+    top: 10px;
+    text-align: center;
+}

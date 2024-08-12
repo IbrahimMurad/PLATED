@@ -9,7 +9,7 @@
             <div class="col-md-4 mb-4">
                 <a class="nav-item nav-link" href="{% url "units-list" subject.id %}">
                     <div class="card">
-                        <img src="{{ subject.cover_pic.url }}" class="card-img-top" alt="{{ subject.name }}">
+                        <img src="{{ subject.cover.url }}" class="card-img-top" alt="{{ subject.name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ subject.name }}</h5>
                             <p class="card-text">{{ subject.caption }}</p>

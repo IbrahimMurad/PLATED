@@ -10,12 +10,21 @@
                 <div class="card">
                     <img src="{{ lesson.cover.url }}" class="card-img-top" alt="{{ lesson.title }}">
                     <div class="card-body">
-                        <a class="nav-item nav-link" href="{% url "lesson-details" lesson.id %}"><h5 class="card-title article-title">Lesson {{ lesson.number }}: {{ lesson.title }}</h5></a>
+                        <a class="nav-item nav-link" href="{% url "lesson-details" lesson.id %}">
+                            <h5 class="card-title article-title">
+                                {% if lesson.number > 0 %}Lesson {{ lesson.number }}: {% endif %}{{ lesson.title }}
+                            </h5>
+                        </a>
                         <p class="card-text">{{ lesson.caption }}</p>
                     </div>
                 </div>
             </div>
         {% endfor %}
+    </div>
+    <div class="generate-button">
+        <form method="POST" class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary"> Generate an Exam on chapter <br> {{ lessons.0.chapter.title }}</button>
+        </form>
     </div>
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 <!-- curriculum.html -->
 {% extends "subjects/base.html" %}
-
+{% block title %} {{ lesson.title }} {% endblock title %} {{ lesson.title }} 
 {% csrf_token %}
 {% block content %}
 <div class="container mt-4">
@@ -8,8 +8,8 @@
         <div>
             <small>
             <a href="{% url "units-list" lesson.chapter.unit.subject.id %}" style="color:grey;"> {{ lesson.chapter.unit.subject.name }} </a>
-            ><a href="{% url "chapters-list" lesson.chapter.unit.id %}" style="color:grey;"> {{ lesson.chapter.unit.title }}</a>
-            ><a href="{% url "lessons-list" lesson.chapter.id %}" style="color:grey;"> {{ lesson.chapter.title }}</a>
+            &gt; <a href="{% url "chapters-list" lesson.chapter.unit.id %}" style="color:grey;"> {{ lesson.chapter.unit.title }}</a>
+            &gt; <a href="{% url "lessons-list" lesson.chapter.id %}" style="color:grey;"> {{ lesson.chapter.title }}</a>
             </small>
         </div>
         <section class="lesson-title">
@@ -22,9 +22,9 @@
                     <i class="bi bi-chevron-down"></i>
                 </button>
             </div>
-            <div id="introContent" class="lesson-content collapse show">
-                <p>{{ lesson.intro }}</p>
-            </div>
+            <p id="introContent" class="lesson-content collapse show">
+                {{ lesson.intro|safe }}
+            </p>
         </section>
         <section class="lesson">
             <div class="lesson-header">
@@ -34,7 +34,7 @@
                 </button>
             </div>
             <div id="goalsContent" class="lesson-content collapse show">
-                <p>{{ lesson.goals|safe }}</p>
+                {{ lesson.goals|safe }}
             </div>
         </section>
         <section class="lesson">
@@ -45,7 +45,7 @@
                 </button>
             </div>
             <div id="detailsContent" class="lesson-content collapse show">
-                <p>{{ lesson.details|safe }}</p>
+                {{ lesson.details|safe }}
             </div>
         </section>
         <form method="POST" class="d-flex justify-content-center">

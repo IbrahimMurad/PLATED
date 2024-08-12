@@ -1,17 +1,50 @@
+import os
+from django.utils.text import slugify
 from django.db import models
 from curriculum.models import Grade
+from PIL import Image
 
 # Create your models here.
+
+def resize_image(imgPath):
+    """ resize image """
+    try:
+        image = Image.open(imgPath)
+        if image.height > 300 or image.width > 300:
+            image.thumbnail((400, 400))
+            image.save(imgPath)
+    except FileNotFoundError:
+        pass
+
 
 class Subject(models.Model):
     """ subjects table """
     name = models.CharField(max_length=128)
     grade = models.ForeignKey(Grade, models.SET_NULL, null=True, blank=True)
-    cover_pic = models.ImageField(default='default.jpg', upload_to='subject_covers')
+    cover = models.ImageField(default='default.jpg', upload_to='subject_covers')
     caption = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} for {self.grade}"
+
+    def save(self):
+        """ changes the name of the cover and remove older one before saving """
+        # changes the name of the cover image to be the_model_name-instance_pk.ext
+        if self.cover:
+            _, ext = os.path.splitext(self.cover.name)
+            new_img_name = f"{slugify(self.__class__.__name__)}-{self.pk}{ext}"
+            self.cover.name = new_img_name
+        # If updating the cover image, remove the old one first, else do nothing
+        if self.pk:
+            try:
+                old_cover = Subject.objects.get(pk=self.pk).cover
+                if old_cover and old_cover.name != self.cover.name:
+                    if os.path.isfile(old_cover.path):
+                        os.remove(old_cover.path)
+            except Subject.DoesNotExist:
+                pass
+        super().save()
+        resize_image(self.cover.path)
 
 
 class Unit(models.Model):
@@ -25,6 +58,26 @@ class Unit(models.Model):
     def __str__(self):
         return f"Unit {self.number} : {self.title} - {self.subject.name}"
 
+    def save(self, *args, **kwargs):
+        """ changes the name of the cover and remove older one before saving """
+        # changes the name of the cover image to be the_model_name-instance_pk.ext
+        if self.cover:
+            root, ext = os.path.splitext(self.cover.name)
+            new_img_name = f"{slugify(self.__class__.__name__)}-{self.pk}{ext}"
+            if not self.cover.name.endswith(new_img_name):
+                self.cover.name = new_img_name
+        # If updating the cover image, remove the old one first, else do nothing
+        if self.pk:
+            try:
+                old_cover = Unit.objects.get(pk=self.pk).cover
+                if old_cover and old_cover.name != self.cover.name:
+                    if os.path.isfile(old_cover.path):
+                        os.remove(old_cover.path)
+            except Unit.DoesNotExist:
+                pass
+        super().save(*args, **kwargs)
+        resize_image(self.cover.path)
+
 
 class Chapter(models.Model):
     """ chapters table """
@@ -36,6 +89,26 @@ class Chapter(models.Model):
 
     def __str__(self):
         return f"Chapter {self.number} : {self.title} - {self.unit.title}"
+
+    def save(self, *args, **kwargs):
+        """ changes the name of the cover and remove older one before saving """
+        # changes the name of the cover image to be the_model_name-instance_pk.ext
+        if self.cover:
+            root, ext = os.path.splitext(self.cover.name)
+            new_img_name = f"{slugify(self.__class__.__name__)}-{self.pk}{ext}"
+            if not self.cover.name.endswith(new_img_name):
+                self.cover.name = new_img_name
+        # If updating the cover image, remove the old one first, else do nothing
+        if self.pk:
+            try:
+                old_cover = Unit.objects.get(pk=self.pk).cover
+                if old_cover and old_cover.name != self.cover.name:
+                    if os.path.isfile(old_cover.path):
+                        os.remove(old_cover.path)
+            except Unit.DoesNotExist:
+                pass
+        super().save(*args, **kwargs)
+        resize_image(self.cover.path)
 
 
 class Lesson(models.Model):
@@ -59,3 +132,23 @@ class Lesson(models.Model):
 
     def __str__(self):
         return f"Lesson {self.number} : {self.title} - {self.chapter.title}"
+
+    def save(self, *args, **kwargs):
+        """ changes the name of the cover and remove older one before saving """
+        # changes the name of the cover image to be the_model_name-instance_pk.ext
+        if self.cover:
+            root, ext = os.path.splitext(self.cover.name)
+            new_img_name = f"{slugify(self.__class__.__name__)}-{self.pk}{ext}"
+            if not self.cover.name.endswith(new_img_name):
+                self.cover.name = new_img_name
+        # If updating the cover image, remove the old one first, else do nothing
+        if self.pk:
+            try:
+                old_cover = Unit.objects.get(pk=self.pk).cover
+                if old_cover and old_cover.name != self.cover.name:
+                    if os.path.isfile(old_cover.path):
+                        os.remove(old_cover.path)
+            except Unit.DoesNotExist:
+                pass
+        super().save(*args, **kwargs)
+        resize_image(self.cover.path)
