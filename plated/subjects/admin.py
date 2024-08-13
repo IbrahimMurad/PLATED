@@ -12,7 +12,7 @@ class LessonAdmin(nested_admin.NestedModelAdmin):
         (
             None,
             {
-                'fields': ['title', 'chapter']
+                'fields': ['title', 'chapter', 'grade', 'semester']
             }
         ),
         (

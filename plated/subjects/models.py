@@ -1,7 +1,7 @@
 import os
 from django.utils.text import slugify
 from django.db import models
-from curriculum.models import Grade
+from curriculum.models import Grade, Semester
 from PIL import Image
 
 # Create your models here.
@@ -20,12 +20,11 @@ def resize_image(imgPath):
 class Subject(models.Model):
     """ subjects table """
     name = models.CharField(max_length=128)
-    grade = models.ForeignKey(Grade, models.SET_NULL, null=True, blank=True)
     cover = models.ImageField(default='default.jpg', upload_to='subject_covers')
     caption = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name} for {self.grade}"
+        return f"{self.name} subject"
 
     def save(self):
         """ changes the name of the cover and remove older one before saving """
@@ -129,6 +128,8 @@ class Lesson(models.Model):
     notes = models.TextField(null=True, blank=True)
     requires = models.JSONField(null=True, blank=True)
     required_by = models.JSONField(null=True, blank=True)
+    grade = models.ForeignKey(Grade, related_name='lessons', on_delete=models.CASCADE, default=1)
+    semester = models.ForeignKey(Semester, null=True, related_name='lessons', on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Lesson {self.number} : {self.title} - {self.chapter.title}"

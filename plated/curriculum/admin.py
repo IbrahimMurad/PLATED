@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Curriculum, Grade
+from .models import Curriculum, Grade, Semester
 
-# Register your models here.
 
 admin.site.register(Curriculum)
 admin.site.register(Grade)
+admin.site.register(Semester)
