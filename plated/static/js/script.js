@@ -1,19 +1,9 @@
+document.getElementById('toggleBtn').addEventListener('click', function() {
+    const sidebar = document.getElementById('side-nav-bar');
+    sidebar.classList.toggle('show');
+});
 
-document.addEventListener('DOMContentLoaded', function() {
-    let toggleButtons = document.querySelectorAll('[data-toggle="collapse"]');
-
-    toggleButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            let targetId = button.getAttribute('data-target');
-            let targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                if (targetElement.classList.contains('show')) {
-                    targetElement.classList.remove('show');
-                } else {
-                    targetElement.classList.add('show');
-                }
-            }
-        });
-    });
+document.querySelector('.dropdown-btn').addEventListener('click', function() {
+    const dropdownContainer = this.nextElementSibling;
+    dropdownContainer.classList.toggle('show');
 });

@@ -4,14 +4,16 @@
 {% csrf_token %}
 {% block content %}
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
+            <li class="breadcrumb-item"><a href="{% url "units-list" lesson.chapter.unit.subject.id %}">{{ lesson.chapter.unit.subject.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url "chapters-list" lesson.chapter.unit.id %}">{{ lesson.chapter.unit.title }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url "lessons-list" lesson.chapter.id %}">{{ lesson.chapter.title }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ lesson.title }}</li>
+        </ol>
+    </nav>
     <article class="lesson">
-        <div>
-            <small>
-            <a href="{% url "units-list" lesson.chapter.unit.subject.id %}" style="color:grey;"> {{ lesson.chapter.unit.subject.name }} </a>
-            &gt; <a href="{% url "chapters-list" lesson.chapter.unit.id %}" style="color:grey;"> {{ lesson.chapter.unit.title }}</a>
-            &gt; <a href="{% url "lessons-list" lesson.chapter.id %}" style="color:grey;"> {{ lesson.chapter.title }}</a>
-            </small>
-        </div>
         <section class="lesson-title">
             <h1 class="">{% if lesson.number > 0 %} Lesson {{ lesson.number }} : {% endif %}{{ lesson.title }}</h1>
         </section>

@@ -3,10 +3,16 @@
 
 {% block content %}
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ subject.name }}</li>
+        </ol>
+    </nav>
     <div class="row">
         <!-- Loop through each unit in the subject -->
-        {% for unit in units %}
-            <div class="col-md-4 mb-4">
+        {% for unit in subject.units.all %}
+            <div class="col-md-4 mb-4" id="card-div">
                 <a class="nav-item nav-link" href="{% url "chapters-list" unit.id %}">
                     <div class="card">
                         <img src="{{ unit.cover.url }}" class="card-img-top" alt="{{ unit.title }}">

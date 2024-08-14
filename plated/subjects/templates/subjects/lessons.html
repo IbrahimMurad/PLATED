@@ -3,10 +3,18 @@
 
 {% block content %}
 <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
+            <li class="breadcrumb-item"><a href="{% url "units-list" chapter.unit.subject.id %}">{{ chapter.unit.subject.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url "chapters-list" chapter.unit.id %}">{{ chapter.unit.title }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ chapter.title }}</li>
+        </ol>
+    </nav>
     <div class="row">
         <!-- Loop through each lesson in the chapter -->
-        {% for lesson in lessons %}
-            <div class="col-md-4 mb-4">
+        {% for lesson in chapter.lessons.all %}
+            <div class="col-md-4 mb-4" id="card-div">
                 <div class="card">
                     <img src="{{ lesson.cover.url }}" class="card-img-top" alt="{{ lesson.title }}">
                     <div class="card-body">

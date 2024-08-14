@@ -1,21 +1,84 @@
-<!-- base.html -->
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Curriculum{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <title>
+        {% if title %}{{ title }}{% else %}PLATED{% endif %}
+    </title>
 </head>
 <body>
-    <div class="container">
-        {% block content %}{% endblock %}
+    <header class="site-header fixed-top d-flex align-items-center">
+        <button class="toggle-btn" id="toggleBtn">&#9776;</button>
+        <a class="navbar-brand font-weight-bold text-light ml-3 pl-lg-5" href="#">PLATED</a>
+        <div class="header-right ml-auto d-flex align-items-center">
+            {% if user.is_authenticated %}
+            <div class="pr-2"><strong class="pr-2">Welcome, </strong> <a href="#" class="username text-light">{{ user.username }}</a></div>
+            <div class="text-light pl-2">
+                <span>|</span>
+                <span class="pr-2 pl-2">First year of secondary school</span>
+                <span>|</span>
+                <button type="button" class="btn" style="color: white;" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ semester.ending_date }}">
+                    {% if semester %} {{ semester.get_title_display }} {% else %} No running semesters right now {% endif %}
+                </button>
+            </div>
+            {% else %}
+            <div class="pr-5">
+                <a href="{% url "login" %}" class="text-light">LogIn</a>
+                <span class="pr-lg-2 pl-lg-2"> / </span>
+                <a href="{% url "register" %}" class="text-light">Register</a>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+    <div class="d-flex flex-grow-2">
+        <nav id="side-nav-bar" class="side-nav">
+            <a href="#">Home</a>
+            <a href="#">Dashboard</a>
+            <a href="{% url "subjects-list" %}">Curriculum</a>
+            <a href="#">Exams</a>
+            {% if user.is_authenticated %}
+            <div class="dropdown-divider border-dark"></div>
+            <button class="btn font-weight-bold" id="account-btn" type="button" data-toggle="collapse" data-target="#account-options" aria-expanded="false" aria-controls="account-options">
+                Account<i class="bi bi-chevron-down"></i>
+            </button>
+            <div class="dropdown-container dropdown collapse" id="account-options">
+                <a href="#">Settings</a>
+                <form method="post" action="{% url "logout" %}">
+                    {% csrf_token %}
+                    <button class="btn btn-link font-weight-bold" type="submit" style="color:black;">Logout</button>
+                </form>
+            </div>
+            {% endif %}
+        </nav>
+
+        <main class="content-section container col-md-8">
+            {% if messages %} {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %} {% endif %}
+            {% block content %}{% endblock content %}
+        </main>
     </div>
-    <script src="{% static 'js/script.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="{% static "js/script.js" %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 </body>
 </html>
