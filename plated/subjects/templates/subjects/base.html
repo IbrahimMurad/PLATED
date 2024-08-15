@@ -23,10 +23,10 @@
         <a class="navbar-brand font-weight-bold text-light ml-3 pl-lg-5" href="#">PLATED</a>
         <div class="header-right ml-auto d-flex align-items-center">
             {% if user.is_authenticated %}
-            <div class="pr-2"><strong class="pr-2">Welcome, </strong> <a href="#" class="username text-light">{{ user.username }}</a></div>
+            <div class="pr-2"><strong class="pr-2">Welcome, </strong> <a href="#" class="username text-light">{{ user.student.first_name }} {{ user.student.last_name }}</a></div>
             <div class="text-light pl-2">
                 <span>|</span>
-                <span class="pr-2 pl-2">First year of secondary school</span>
+                <span class="pr-2 pl-2"> {{ user.student.grade.title }} </span>
                 <span>|</span>
                 <button type="button" class="btn" style="color: white;" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ semester.ending_date }}">
                     {% if semester %} {{ semester.get_title_display }} {% else %} No running semesters right now {% endif %}
@@ -53,7 +53,7 @@
                 Account<i class="bi bi-chevron-down"></i>
             </button>
             <div class="dropdown-container dropdown collapse" id="account-options">
-                <a href="#">Settings</a>
+                <a href="{% url "settings" %}">Settings</a>
                 <form method="post" action="{% url "logout" %}">
                     {% csrf_token %}
                     <button class="btn btn-link font-weight-bold" type="submit" style="color:black;">Logout</button>
