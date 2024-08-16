@@ -20,7 +20,7 @@
 <body>
     <header class="site-header fixed-top d-flex align-items-center">
         <button class="toggle-btn" id="toggleBtn">&#9776;</button>
-        <a class="navbar-brand font-weight-bold text-light ml-3 pl-lg-5" href="#">PLATED</a>
+        <a class="navbar-brand font-weight-bold text-light ml-lg-5 pl-1 position-relative" href="#">PLATED</a>
         <div class="header-right ml-auto d-flex align-items-center">
             {% if user.is_authenticated %}
             <div class="pr-2"><strong class="pr-2">Welcome, </strong> <a href="#" class="username text-light">{{ user.student.first_name }} {{ user.student.last_name }}</a></div>
@@ -52,11 +52,11 @@
             <button class="btn font-weight-bold" id="account-btn" type="button" data-toggle="collapse" data-target="#account-options" aria-expanded="false" aria-controls="account-options">
                 Account<i class="bi bi-chevron-down"></i>
             </button>
-            <div class="dropdown-container dropdown collapse" id="account-options">
-                <a href="{% url "settings" %}">Settings</a>
-                <form method="post" action="{% url "logout" %}">
+            <div class="dropdown-container dropdown collapse mt-1" id="account-options">
+                <a class="w-100" href="{% url "profile" %}">Profile</a>
+                <form class="mt-5" method="post" action="{% url "logout" %}">
                     {% csrf_token %}
-                    <button class="btn btn-link font-weight-bold" type="submit" style="color:black;">Logout</button>
+                    <button class="btn btn-outline-danger" id="logout-btn" type="submit">Logout</button>
                 </form>
             </div>
             {% endif %}

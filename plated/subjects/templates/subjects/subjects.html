@@ -3,6 +3,11 @@
 
 {% block content %}
 <div class="container mt-4">
+    {% if message %}
+    <div>
+        <h4 class="alert alert-info forn-weight-bold">{{ message }}</h4>
+    </div>
+    {% else %}
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -26,5 +31,6 @@
             </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 {% endblock %}

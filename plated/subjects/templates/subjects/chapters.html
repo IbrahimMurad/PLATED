@@ -3,16 +3,22 @@
 
 {% block content %}
 <div class="container mt-4">
+    {% if message %}
+    <div>
+        <h4 class="alert alert-info forn-weight-bold">{{ message }}</h4>
+        <a href="{% url "subjects-list" %}" class="btn btn-primary">Back to my curriculum</a>
+    </div>
+    {% else %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
-            <li class="breadcrumb-item"><a href="{% url "units-list" unit.subject.id %}">{{ unit.subject.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url "units-list" unit.subject_id %}">{{ unit.subject_name }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ unit.title }}</li>
         </ol>
     </nav>
     <div class="row">
         <!-- Loop through each chapter in the unit -->
-        {% for chapter in unit.chapters.all %}
+        {% for chapter in unit.chapters %}
             <div class="col-md-4 mb-4" id="card-div">
                 <a class="nav-item nav-link" href="{% url "lessons-list" chapter.id %}">
                     <div class="card">
@@ -26,5 +32,6 @@
             </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 {% endblock %}

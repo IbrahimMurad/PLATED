@@ -1,9 +1,14 @@
 <!-- curriculum.html -->
 {% extends "subjects/base.html" %}
-{% block title %} {{ lesson.title }} {% endblock title %} {{ lesson.title }} 
 {% csrf_token %}
 {% block content %}
 <div class="container mt-4">
+    {% if message %}
+    <div>
+        <h4 class="alert alert-info forn-weight-bold">{{ message }}</h4>
+        <a href="{% url "subjects-list" %}" class="btn btn-link">Back to my curriculum</a>
+    </div>
+    {% else %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
@@ -56,5 +61,6 @@
     </article>
     <article class="exam">
     </article>
+    {% endif %}
 </div>
 {% endblock %}

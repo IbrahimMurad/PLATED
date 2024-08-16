@@ -3,17 +3,23 @@
 
 {% block content %}
 <div class="container mt-4">
+    {% if message %}
+    <div>
+        <h4 class="alert alert-info forn-weight-bold">{{ message }}</h4>
+        <a href="{% url "subjects-list" %}" class="btn btn-primary">Back to my curriculum</a>
+    </div>
+    {% else %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
-            <li class="breadcrumb-item"><a href="{% url "units-list" chapter.unit.subject.id %}">{{ chapter.unit.subject.name }}</a></li>
-            <li class="breadcrumb-item"><a href="{% url "chapters-list" chapter.unit.id %}">{{ chapter.unit.title }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url "units-list" chapter.subject_id %}">{{ chapter.subject_name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url "chapters-list" chapter.unit_id %}">{{ chapter.unit_title }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ chapter.title }}</li>
         </ol>
     </nav>
     <div class="row">
         <!-- Loop through each lesson in the chapter -->
-        {% for lesson in chapter.lessons.all %}
+        {% for lesson in chapter.lessons %}
             <div class="col-md-4 mb-4" id="card-div">
                 <div class="card">
                     <img src="{{ lesson.cover.url }}" class="card-img-top" alt="{{ lesson.title }}">
@@ -34,5 +40,6 @@
             <button type="submit" class="btn btn-primary"> Generate an Exam on chapter <br> {{ lessons.0.chapter.title }}</button>
         </form>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="content-section col-md-5">
-    <form method='POST'>
+    <form action="{% url "profile" %}" method='POST'>
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Update your profile.</legend>
@@ -11,6 +11,28 @@
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Save</button>
+        </div>
+    </form>
+    <div class="dropdown-divider"></div>
+    <form action="{% url "change_password" %}" method='POST' >
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Change your password.</legend>
+                {{ password_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Change Password</button>
+        </div>
+    </form>
+    <div class="dropdown-divider"></div>
+    <form action="{% url "delete_account" %}" method='POST'>
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Delete my account.</legend>
+                {{ delete_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-danger" type="submit">Delete</button>
         </div>
     </form>
 </div>
