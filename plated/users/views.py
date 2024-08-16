@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.messages import success, error
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.urls import views as auth_views
+from django.contrib.auth.models import User
 from curriculum.models import CURRENT_SEMESTER
 from users.forms import (
     UserRegisterForm,
@@ -67,7 +69,7 @@ def change_passowrd(request):
         if password_form.is_valid():
             request.user.set_password(password_form.cleaned_data.get('new_password'))
             request.user.save()
-            success(request, f'Your password has been changed!')
+            messages.success(request, f'Your password has been changed!')
             return redirect('profile')
     else:
         password_form = ChangePasswordForm()
@@ -87,7 +89,7 @@ def delete_account(request):
         delete_form = DeleteAccountForm(request.POST, instance=request.user)
         if delete_form.is_valid():
             request.user.delete()
-            success(request, f'Your account has been deleted!')
+            messages.success(request, f'Your account has been deleted!')
             return redirect('login')
     else:
         delete_form = DeleteAccountForm()
@@ -99,3 +101,14 @@ def delete_account(request):
         'delete_form': delete_form,
         'semester': CURRENT_SEMESTER,
         })
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if User.objects.filter(email=email).exists():
+            return auth_views.PasswordResetView.as_view(template_name='users/password_reset.html')(request)
+        else:
+            messages.error(request, f'This email does not exist.')
+            return redirect('password_reset')
+    return auth_views.PasswordResetView.as_view(template_name='users/password_reset.html')(request)

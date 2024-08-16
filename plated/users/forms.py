@@ -11,11 +11,18 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email address is already in use.")
+        return email
+
 
 class StudentRegisterForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['first_name', 'last_name', 'grade']
+
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -23,6 +30,13 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email address is already in use.")
+        return email
+
 
 class StudentUpdateForm(forms.ModelForm):
     class Meta:
