@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'curriculum',
     'subjects.apps.SubjectsConfig',
     'questions.apps.QuestionsConfig',
-    'nested_admin',
     'users.apps.UsersConfig',
+    'exams.apps.ExamsConfig',
+    'nested_admin',
     'crispy_forms',
     'crispy_bootstrap4',
 ]

@@ -1,0 +1,49 @@
+{% extends "subjects/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <form>
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                <div class="exam-title"> {{ exam_title }}</div>
+                <div class="score"> Score: {{ score }}</div>
+            </legend>
+            {% for question in questions %}
+            <div id="div_id_question_1" class="form-group mt-5 pt-3" style="border-top: solid 1px black;">
+                <label>
+                    <h4> {{ question.body }} </h4>
+                </label>
+                <div style="width: fit-content;">
+                    {% for answer in question.answers %}
+                    {% if answer == question.student_answer.answer %}
+                    <div class="form-check  {% if answer.is_correct %}alert-success{% else %}alert-danger{% endif %}">
+                        <input type="radio" class="form-check-input" id="id_question_1_0" checked disabled>
+                        <label class="form-check-label">{{ answer.body }}</label>
+                    </div>
+                    {% else %}
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="id_question_1_0" disabled>
+                        <label class="form-check-label" {% if answer.is_correct %} style="color: green; font-weight: bold;" {% endif %}>
+                            {{ answer.body }}
+                        </label>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </fieldset>
+    </form>
+    <div class="d-flex justify-content-around">
+        <a href="{% url "exams" %}" class="btn btn-primary">Back to Exam List</a>
+        <a href="{% url "lesson-details" lesson_id %}" class="btn btn-primary">Back to Lesson</a>
+    </div>
+    <form action="{% url "delete-exam" exam_id %}" method="post" class="mt-5 border-top">
+        {% csrf_token %}
+        <input type="hidden" name="exam_id" value="{{ exam_id }}">
+        <button type="submit" class="btn btn-danger mt-3">Delete Exam</button>
+    </form>
+</div>
+
+{% endblock content %}

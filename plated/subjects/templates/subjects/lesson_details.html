@@ -1,5 +1,6 @@
 <!-- curriculum.html -->
 {% extends "subjects/base.html" %}
+{% load crispy_forms_tags %}
 {% csrf_token %}
 {% block content %}
 <div class="container mt-4">
@@ -55,12 +56,14 @@
                 {{ lesson.details|safe }}
             </div>
         </section>
-        <form method="POST" class="d-flex justify-content-center">
+    </article>
+    <article class="generate-exam">
+        <div class="row mb-2 mt-2 text-muted">Want an exam for this lesson?</div>
+        <form action="{% url "generate-lesson-exam" lesson.id %}" method="POST" class="d-flex justify-content-center">
+            {% csrf_token %}
             <button type="submit" class="btn btn-primary">Generate Exam</button>
         </form>
     </article>
-    <article class="exam">
-    </article>
-    {% endif %}
 </div>
+{% endif %}
 {% endblock %}

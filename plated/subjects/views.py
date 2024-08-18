@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Subject, Unit, Chapter, Lesson
 from curriculum.models import CURRENT_SEMESTER
 from django.contrib.auth.decorators import login_required
+from exams.forms import ExamForm
 
 
 @login_required(login_url='login')
@@ -119,8 +120,14 @@ def lesson_details_view(request, id):
             'message': 'This lesson is not available for your grade or the running smester.',
             'semester': CURRENT_SEMESTER
             })
-    return render(request, 'subjects/lesson_details.html', {
+    context = {
         'lesson': lesson,
         'title': lesson.title,
         'semester': CURRENT_SEMESTER
-        })
+    }
+    exams = lesson.exam_set.all()
+    if exams:
+        last_exam = exams.filter(student=request.user.student).order_by('-created_at').first()
+        exam_form = ExamForm(last_exam)
+        context.update({'exam_form': exam_form})
+    return render(request, 'subjects/lesson_details.html', context)

@@ -166,3 +166,32 @@ dt {
     top: 10px;
     text-align: center;
 }
+
+
+div[id^="div_id_question_"] label.requiredField {
+    font-weight: bold;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+.pagination .step-links {
+    display: inline-block;
+}
+.pagination .pagination-link {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.pagination .pagination-link:hover {
+    background-color: #f0f0f0;
+}
+.pagination .current {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+}

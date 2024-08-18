@@ -46,7 +46,7 @@
             <a href="#">Home</a>
             <a href="#">Dashboard</a>
             <a href="{% url "subjects-list" %}">Curriculum</a>
-            <a href="#">Exams</a>
+            <a href="{% url "exams" %}">Exams</a>
             {% if user.is_authenticated %}
             <div class="dropdown-divider border-dark"></div>
             <button class="btn font-weight-bold" id="account-btn" type="button" data-toggle="collapse" data-target="#account-options" aria-expanded="false" aria-controls="account-options">

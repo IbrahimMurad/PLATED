@@ -40,6 +40,7 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'),
         name="password_reset_complete"),
     path('user/', include('users.urls')),
+    path('exam/', include('exams.urls')),
     path(r'^_nested_admin/', include('nested_admin.urls')),
 ]
 

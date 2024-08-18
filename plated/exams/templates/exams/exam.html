@@ -1,0 +1,17 @@
+{% extends "subjects/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section col-lg-10">
+    <form action="{% url "lesson-exam" exam.id %}" method='POST'>
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Exam on {{ exam.lesson.title }} by {{ exam.user.first_name }} {{ exam.user.last_name }}</legend>
+                {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-primary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

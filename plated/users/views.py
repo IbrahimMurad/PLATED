@@ -14,7 +14,6 @@ from users.forms import (
 )
 
 
-
 def register(request):
     if request.method == 'POST':
         u_form = UserRegisterForm(request.POST)
@@ -27,7 +26,7 @@ def register(request):
             student.user = user
             student.save()
 
-            success(request, f'Your account has been created! You are now able to log in!')
+            messages.success(request, f'Your account has been created! You are now able to log in!')
             return redirect('login')
     else:
         u_form = UserRegisterForm()
@@ -47,7 +46,7 @@ def settings(request):
         if user_form.is_valid() and student_form.is_valid():
             user_form.save()
             student_form.save()
-            success(request, f'Your account has been updated!')
+            messages.success(request, f'Your account has been updated!')
             return redirect('profile')
     else:
         user_form = UserUpdateForm(instance=request.user)
