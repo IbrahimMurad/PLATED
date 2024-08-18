@@ -12,7 +12,7 @@ class Question(models.Model):
             (4, 'Very Hard')
         ]
     )
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='questions')
     graph = models.ImageField(upload_to='graphs/', null=True, blank=True)
 
     def __str__(self):

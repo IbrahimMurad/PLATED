@@ -3,10 +3,10 @@
 {% block content %}
 
 <div class="content-section col-lg-10">
-    <form action="{% url "lesson-exam" exam.id %}" method='POST'>
+    <form action="{% url "exam" exam.id %}" method='POST'>
         {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Exam on {{ exam.lesson.title }} by {{ exam.user.first_name }} {{ exam.user.last_name }}</legend>
+            <legend class="border-bottom mb-4"> {{ title }} </legend>
                 {{ form|crispy }}
         </fieldset>
         <div class="form-group">

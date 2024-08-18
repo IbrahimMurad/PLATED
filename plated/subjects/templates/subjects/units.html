@@ -1,6 +1,6 @@
 <!-- curriculum.html -->
 {% extends "subjects/base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="container mt-4">
     {% if message %}
@@ -12,12 +12,12 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ subject.name }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
         </ol>
     </nav>
     <div class="row">
         <!-- Loop through each unit in the subject -->
-        {% for unit in subject.units %}
+        {% for unit in units %}
             <div class="col-md-4 mb-4" id="card-div">
                 <a class="nav-item nav-link" href="{% url "chapters-list" unit.id %}">
                     <div class="card">
@@ -31,6 +31,14 @@
             </div>
         {% endfor %}
     </div>
+    <article class="generate-exam">
+        <div class="row mb-2 mt-2 text-muted">Want an exam for this subject?</div>
+        <form action="{% url "generate-exam" %}" method="POST" class="d-flex justify-content-center">
+            {% csrf_token %}
+            {{ exam_form|crispy }}
+            <button type="submit" class="btn btn-primary">Generate Exam</button>
+        </form>
+    </article>
     {% endif %}
 </div>
 {% endblock %}

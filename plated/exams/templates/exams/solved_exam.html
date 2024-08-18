@@ -6,8 +6,8 @@
     <form>
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">
-                <div class="exam-title"> {{ exam_title }}</div>
-                <div class="score"> Score: {{ score }}</div>
+                <div class="exam-title"> {{ title }}</div>
+                <div class="score"> Score: {{ exam.score }}</div>
             </legend>
             {% for question in questions %}
             <div id="div_id_question_1" class="form-group mt-5 pt-3" style="border-top: solid 1px black;">
@@ -37,11 +37,19 @@
     </form>
     <div class="d-flex justify-content-around">
         <a href="{% url "exams" %}" class="btn btn-primary">Back to Exam List</a>
-        <a href="{% url "lesson-details" lesson_id %}" class="btn btn-primary">Back to Lesson</a>
+        {% if exam.subject %}
+        <a href="{% url "units-list" exam.subject.id %}" class="btn btn-primary">Back to Subject</a>
+        {% elif exam.unit %}
+        <a href="{% url "chapters-list" exam.unit.id %}" class="btn btn-primary">Back to Unit</a>
+        {% elif exam.chapter %}
+        <a href="{% url "lessons-list" exam.chapter.id %}" class="btn btn-primary">Back to Chapter</a>
+        {% else %}
+        <a href="{% url "lesson-details" exam.lesson.id %}" class="btn btn-primary">Back to Lesson</a>
+        {% endif %}
     </div>
-    <form action="{% url "delete-exam" exam_id %}" method="post" class="mt-5 border-top">
+    <form action="{% url "delete-exam" exam.id %}" method="post" class="mt-5 border-top">
         {% csrf_token %}
-        <input type="hidden" name="exam_id" value="{{ exam_id }}">
+        <input type="hidden" name="exam_id" value="{{ exam.id }}">
         <button type="submit" class="btn btn-danger mt-3">Delete Exam</button>
     </form>
 </div>

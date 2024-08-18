@@ -1,6 +1,6 @@
 <!-- curriculum.html -->
 {% extends "subjects/base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="container mt-4">
     {% if message %}
@@ -12,14 +12,14 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
-            <li class="breadcrumb-item"><a href="{% url "units-list" chapter.subject_id %}">{{ chapter.subject_name }}</a></li>
-            <li class="breadcrumb-item"><a href="{% url "chapters-list" chapter.unit_id %}">{{ chapter.unit_title }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ chapter.title }}</li>
+            <li class="breadcrumb-item"><a href="{% url "units-list" chapter.unit.subject.id %}">{{ chapter.unit.subject.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url "chapters-list" chapter.unit.id %}">{{ chapter.unit.title }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
         </ol>
     </nav>
     <div class="row">
         <!-- Loop through each lesson in the chapter -->
-        {% for lesson in chapter.lessons %}
+        {% for lesson in lessons %}
             <div class="col-md-4 mb-4" id="card-div">
                 <div class="card">
                     <img src="{{ lesson.cover.url }}" class="card-img-top" alt="{{ lesson.title }}">
@@ -35,11 +35,14 @@
             </div>
         {% endfor %}
     </div>
-    <div class="generate-button">
-        <form method="POST" class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary"> Generate an Exam on chapter <br> {{ lessons.0.chapter.title }}</button>
+    <article class="generate-exam border-top">
+        <div class="row mb-2 mt-2 text-muted">Want an exam for this chapter?</div>
+        <form action="{% url "generate-exam" %}" method="POST" class="d-flex justify-content-center">
+            {% csrf_token %}
+            {{ exam_form|crispy }}
+            <button type="submit" class="btn btn-primary">Generate Exam</button>
         </form>
-    </div>
+    </article>
     {% endif %}
 </div>
 {% endblock %}

@@ -3,6 +3,11 @@ from django import forms
 from .models import Exam
 
 
+class GenerateExamForm(forms.Form):
+    focus = forms.CharField(max_length=16, widget=forms.HiddenInput())
+    id = forms.IntegerField(widget=forms.HiddenInput())
+
+
 class ExamForm(forms.Form):
     class Meta:
         model = Exam

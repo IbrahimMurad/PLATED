@@ -59,8 +59,9 @@
     </article>
     <article class="generate-exam">
         <div class="row mb-2 mt-2 text-muted">Want an exam for this lesson?</div>
-        <form action="{% url "generate-lesson-exam" lesson.id %}" method="POST" class="d-flex justify-content-center">
+        <form action="{% url "generate-exam" %}" method="POST" class="d-flex justify-content-center">
             {% csrf_token %}
+            {{ exam_form|crispy }}
             <button type="submit" class="btn btn-primary">Generate Exam</button>
         </form>
     </article>

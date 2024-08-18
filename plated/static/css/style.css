@@ -173,6 +173,8 @@ div[id^="div_id_question_"] label.requiredField {
 }
 
 .pagination {
+    display: flex;
+    justify-content: center;
     text-align: center;
     margin-top: 20px;
 }

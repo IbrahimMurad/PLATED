@@ -2,7 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from .models import Subject, Unit, Chapter, Lesson
 from curriculum.models import CURRENT_SEMESTER
 from django.contrib.auth.decorators import login_required
-from exams.forms import ExamForm
+from exams.forms import GenerateExamForm
+from subjects.utils import (
+    get_relevant_subject_units,
+    get_relevant_unit_chapters,
+    get_relevant_chapter_lessons,
+)
 
 
 @login_required(login_url='login')
@@ -13,7 +18,6 @@ def subjects_view(request):
     subjects = list(set([lesson.chapter.unit.subject for lesson in lessons]))
     return render(request, 'subjects/subjects.html', {
         'subjects': subjects,
-        'semester': CURRENT_SEMESTER,
         'title': 'subjects',
         })
 
@@ -22,28 +26,24 @@ def subjects_view(request):
 def units_view(request, id):
     if not CURRENT_SEMESTER:
         return render(request, 'subjects/units.html', {'message': 'There is no running semester right now.'})
-    requested_subject = get_object_or_404(Subject, pk=id)
-    lessons = Lesson.objects.filter(
-        grade=request.user.student.grade,
-        semester=CURRENT_SEMESTER,
-        chapter__unit__subject=requested_subject
-        )
-    units = list(set([lesson.chapter.unit for lesson in lessons]))
+
+    subject = get_object_or_404(Subject, pk=id)
+    units = get_relevant_subject_units(id, request.user.student.grade, CURRENT_SEMESTER)
+
     if not units:
         return render(request, 'subjects/units.html', {
             'message': 'This subject is not available for your grade or the running semester.',
             'semester': CURRENT_SEMESTER
             })
-    subject = {
-        'id': id,
-        'name': requested_subject.name,
-        'units': units,
-    }
+
+    exam_form = GenerateExamForm(initial={'focus': 'subject', 'id': id})
     context = {
-        'subject': subject,
-        'semester': CURRENT_SEMESTER,
-        'title': requested_subject.name,
+        'subject_id': subject.id,
+        'title': subject.name,
+        'units': units,
+        'exam_form': exam_form,
     }
+
     return render(request, 'subjects/units.html', context)
 
 
@@ -51,29 +51,23 @@ def units_view(request, id):
 def chapters_view(request, id):
     if not CURRENT_SEMESTER:
         return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
-    requested_unit = get_object_or_404(Unit, pk=id)
-    lessons = Lesson.objects.filter(
-        grade=request.user.student.grade,
-        semester=CURRENT_SEMESTER,
-        chapter__unit=requested_unit
-        )
-    chapters = list(set([lesson.chapter for lesson in lessons]))
+
+    unit = get_object_or_404(Unit, pk=id)
+    chapters = get_relevant_unit_chapters(id, request.user.student.grade, CURRENT_SEMESTER)
+
     if not chapters:
         return render(request, 'subjects/chapters.html', {
             'message': 'This unit is not available for your grade or the running semester.',
             'semester': CURRENT_SEMESTER
             })
-    unit = {
-        'id': id,
-        'title': requested_unit.title,
-        'subject_id': requested_unit.subject.pk,
-        'subject_name': requested_unit.subject.name,
-        'chapters': chapters,
-    }
+
+    exam_form = GenerateExamForm(initial={'focus': 'unit', 'id': id})
+
     context = {
         'unit': unit,
-        'semester': CURRENT_SEMESTER,
-        'title': requested_unit.title,
+        'chapters': chapters,
+        'title': unit.title,
+        'exam_form': exam_form,
     }
     return render(request, 'subjects/chapters.html', context)
 
@@ -82,31 +76,25 @@ def chapters_view(request, id):
 def lessons_view(request, id):
     if not CURRENT_SEMESTER:
         return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
-    requested_chapter = get_object_or_404(Chapter, pk=id)
-    lessons = Lesson.objects.filter(
-        grade=request.user.student.grade,
-        semester=CURRENT_SEMESTER,
-        chapter=requested_chapter
-        )
+
+    chapter = get_object_or_404(Chapter, pk=id)
+    lessons = get_relevant_chapter_lessons(id, request.user.student.grade, CURRENT_SEMESTER)
+
     if not lessons:
         return render(request, 'subjects/lessons.html', {
             'message': 'This chapter is not available for your grade or the running semester.',
             'semester': CURRENT_SEMESTER
             })
-    chapter = {
-        'id': id,
-        'title': requested_chapter.title,
-        'unit_id': requested_chapter.unit.pk,
-        'unit_title': requested_chapter.unit.title,
-        'subject_id': requested_chapter.unit.subject.pk,
-        'subject_name': requested_chapter.unit.subject.name,
-        'lessons': lessons,
-    }
+
+    exam_form = GenerateExamForm(initial={'focus': 'chapter', 'id': id})
+
     context = {
         'chapter': chapter,
-        'semester': CURRENT_SEMESTER,
-        'title': requested_chapter.title,
+        'lessons': lessons,
+        'title': chapter.title,
+        'exam_form': exam_form
     }
+
     return render(request, 'subjects/lessons.html', context)
 
 
@@ -114,20 +102,18 @@ def lessons_view(request, id):
 def lesson_details_view(request, id):
     if not CURRENT_SEMESTER:
         return render(request, 'subjects/lesson_details.html', {'message': 'There is no running semester right now.'})
+
     lesson = get_object_or_404(Lesson, pk=id)
+
     if lesson.grade != request.user.student.grade or lesson.semester != CURRENT_SEMESTER:
         return render(request, 'subjects/lesson_details.html', {
             'message': 'This lesson is not available for your grade or the running smester.',
-            'semester': CURRENT_SEMESTER
             })
+
+    exam_form = GenerateExamForm(initial={'focus': 'lesson', 'id': lesson.id})
     context = {
         'lesson': lesson,
         'title': lesson.title,
-        'semester': CURRENT_SEMESTER
+        'exam_form': exam_form,
     }
-    exams = lesson.exam_set.all()
-    if exams:
-        last_exam = exams.filter(student=request.user.student).order_by('-created_at').first()
-        exam_form = ExamForm(last_exam)
-        context.update({'exam_form': exam_form})
     return render(request, 'subjects/lesson_details.html', context)

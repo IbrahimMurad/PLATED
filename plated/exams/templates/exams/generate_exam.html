@@ -1,0 +1,32 @@
+{% extends "subjects/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section col-lg-10">
+    {% if success %}
+    <div class="alert alert-success">
+        <h5>Your exam has been generated sussessfully!</h5>
+    </div>
+    <div>
+        <p>
+            You can start is now by pressing the start button, or you save it for later and go back to
+            <a href="{% url "exams" %}">exam list</a>
+            .
+        </p>
+    </div>
+    <div class="note">
+        <p>
+            <strong>Note:</strong> You can only start the exam once, so make sure you are ready before you start.
+        </p>
+    </div>
+    <div class="start-exam border-top mt-lg-5">
+        <a href="{% url "exam" exam_id %}" class="btn btn-primary">Start Exam</a>
+    </div>
+    {% else %}
+    <div>
+        <p>You can try again later.</p>
+        <a href="{% url "exams" %}">Back to exams list.</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

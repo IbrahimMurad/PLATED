@@ -11,7 +11,15 @@
                     <h4 class="card-title border-bottom">Lesson Exam</h4>
                     <div class="d-flex justify-content-around mb-5">
                         <a href="{% url "solved-exam" exam.id %}">Got to Exam</a>
+                        {% if exam.subject %}
+                        <a href="{% url "units-list" exam.subject.id %}">Got to subject</a>
+                        {% elif exam.unit %}
+                        <a href="{% url "chapters-list" exam.unit.id %}">Got to unit</a>
+                        {% elif exam.chapter %}
+                        <a href="{% url "lessons-list" exam.chapter.id %}">Got to chapter</a>
+                        {% else %}
                         <a href="{% url "lesson-details" exam.lesson.id %}">Got to lesson</a>
+                        {% endif %}
                     </div>
                     <p class="card-text">Score: {{ exam.score }}</p>
                     <p class="card-text">Date created: {{ exam.created_at|date }}</p>
@@ -20,21 +28,29 @@
         {% endfor %}
     </div>
     <!-- Pagination controls -->
-    <div class="pagination">
+    <div class="pagination" style="justify-content: center;">
         <span class="step-links">
-            {% if exams.has_previous %}
+            <span class="previous">
+                {% if exams.has_previous %}
                 <a href="?page=1">&laquo; first</a>
                 <a href="?page={{ exams.previous_page_number }}"> &lt; previous</a>
+            {% else %}
+                <span class="disabled">&laquo; first</span>
+                <span class="disabled"> &lt; previous</span>
             {% endif %}
-
+            </span>
             <span class="current">
                 Page {{ exams.number }} of {{ exams.paginator.num_pages }}.
             </span>
-
-            {% if exams.has_next %}
-                <a href="?page={{ exams.next_page_number }}">next &gt; </a>
-                <a href="?page={{ exams.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
+            <span class="next">
+                {% if exams.has_next %}
+                    <a href="?page={{ exams.next_page_number }}">next &gt; </a>
+                    <a href="?page={{ exams.paginator.num_pages }}">last &raquo;</a>
+                {% else %}
+                    <span class="disabled">next &gt;</span>
+                    <span class="disabled">last &raquo;</span>
+                {% endif %}
+            </span>
         </span>
     </div>
 </div>
