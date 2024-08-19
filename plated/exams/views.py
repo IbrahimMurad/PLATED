@@ -88,8 +88,8 @@ def exam_list(request):
     focus = request.GET.get('focus')
     on = request.GET.get('filter_id')
     is_solved = request.GET.get('is_solved')
-    all_exams = Exam.objects.filter(student=request.user.student)
-    if focus and on and is_solved:
+    all_exams = Exam.objects.filter(student=request.user.student).order_by('-created_at')
+    if focus or on or is_solved:
         all_exams = exam_list_filter(all_exams, focus, on, is_solved)
     paginator = Paginator(all_exams, 12)
     page_number = request.GET.get('page')

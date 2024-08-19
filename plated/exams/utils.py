@@ -112,4 +112,4 @@ def exam_list_filter(exams, focus, on, is_solved):
         exams = exams.filter(solved_at__isnull=False)
     elif is_solved == 'false':
         exams = exams.filter(solved_at__isnull=True)
-    return exams.order_by('-created_at')
+    return exams

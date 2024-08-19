@@ -57,9 +57,15 @@
             </div>
         </section>
     </article>
-    <article class="generate-exam">
-        <div class="row mb-2 mt-2 text-muted">Want an exam for this lesson?</div>
-        <form action="{% url "generate-exam" %}" method="POST" class="d-flex justify-content-center">
+    <article class="generate-exam d-flex justify-content-around ml-lg-5 mr-lg-5">
+        <form action="{% url "exams" %}" method="GET" class="">
+            <input type="hidden" name="focus" value="lesson">
+            <input type="hidden" name="filter_id" value="{{ lesson.id }}">
+            <input type="hidden" name="is_solved">
+            <button type="submit" class="btn btn-outline-secondary">Go to Relataed Exams</button>
+        </form>
+        <h4 class="">OR</h4>
+        <form action="{% url "generate-exam" %}" method="POST">
             {% csrf_token %}
             {{ exam_form|crispy }}
             <button type="submit" class="btn btn-primary">Generate Exam</button>
