@@ -197,3 +197,26 @@ div[id^="div_id_question_"] label.requiredField {
     padding: 5px 10px;
     font-weight: bold;
 }
+
+div.new-exam-body-params {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 75%;
+}
+
+div.focus-select,
+div.solved-select,
+div.focus-element-select {
+    width: fit-content;
+    display: flex;
+    margin-right: 15px;
+}
+
+label[for="id_id"] {
+    min-width: max-content;
+}
+
+.filter {
+    display: flex;
+}

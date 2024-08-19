@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url "subjects-list" %}">subjects</a></li>
-            <li class="breadcrumb-item"><a href="{% url "units-list" chapter.unit.subject.id %}">{{ chapter.unit.subject.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url "units-list" chapter.unit.subject.id %}">{{ chapter.unit.subject.title }}</a></li>
             <li class="breadcrumb-item"><a href="{% url "chapters-list" chapter.unit.id %}">{{ chapter.unit.title }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
         </ol>

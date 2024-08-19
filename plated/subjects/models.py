@@ -4,7 +4,6 @@ from django.db import models
 from curriculum.models import Grade, Semester
 from PIL import Image
 
-# Create your models here.
 
 def resize_image(imgPath):
     """ resize image """
@@ -19,12 +18,12 @@ def resize_image(imgPath):
 
 class Subject(models.Model):
     """ subjects table """
-    name = models.CharField(max_length=128)
+    title = models.CharField(max_length=128)
     cover = models.ImageField(default='default.jpg', upload_to='subject_covers')
     caption = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name} subject"
+        return f"{self.title} subject"
 
     def save(self):
         """ changes the name of the cover and remove older one before saving """
@@ -55,7 +54,7 @@ class Unit(models.Model):
     caption = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"Unit {self.number} : {self.title} - {self.subject.name}"
+        return f"Unit {self.number} : {self.title} - {self.subject.title}"
 
     def save(self, *args, **kwargs):
         """ changes the name of the cover and remove older one before saving """
@@ -87,7 +86,7 @@ class Chapter(models.Model):
     caption = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"Chapter {self.number} : {self.title} - {self.unit.title}"
+        return f"Chapter {self.number} : {self.title}"
 
     def save(self, *args, **kwargs):
         """ changes the name of the cover and remove older one before saving """
@@ -132,11 +131,10 @@ class Lesson(models.Model):
     semester = models.ForeignKey(Semester, null=True, related_name='lessons', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Lesson {self.number} : {self.title} - {self.chapter.title}"
+        return f"Lesson {self.number} : {self.title}"
 
     def save(self, *args, **kwargs):
         """ changes the name of the cover and remove older one before saving """
-        # changes the name of the cover image to be the_model_name-instance_pk.ext
         if self.cover:
             root, ext = os.path.splitext(self.cover.name)
             new_img_name = f"{slugify(self.__class__.__name__)}-{self.pk}{ext}"

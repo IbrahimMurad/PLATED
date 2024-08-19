@@ -39,7 +39,7 @@ def units_view(request, id):
     exam_form = GenerateExamForm(initial={'focus': 'subject', 'id': id})
     context = {
         'subject_id': subject.id,
-        'title': subject.name,
+        'title': subject.title,
         'units': units,
         'exam_form': exam_form,
     }

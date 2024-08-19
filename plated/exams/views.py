@@ -1,12 +1,18 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from .models import Exam, StudentAnswer
-from .forms import ExamForm
+from .forms import ExamForm, NewExamForm
 from questions.models import Answer
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .utils import exam_kwargs, get_exam_questions, get_exam_title
+from .utils import (
+    get_exam_title,
+    get_options,
+    new_exam,
+    exam_list_filter,
+)
 
 
 @login_required(login_url='login')
@@ -14,10 +20,7 @@ def generate_exam(request):
     focus = request.POST.get('focus')
     id = request.POST.get('id')
     if focus and id:
-        questions = get_exam_questions(request.user.student.grade, focus, id)
-        exam = Exam.objects.create(**exam_kwargs(request.user.student, focus, id))
-        exam.questions.set(questions)
-        exam.save()
+        exam = new_exam(request.user.student, focus, id)
         context = {'success': True, 'exam_id': exam.id}
     else:
         context = {'success': False}
@@ -82,11 +85,15 @@ def solved_exam(request, id):
 
 @login_required(login_url='login')
 def exam_list(request):
-    all_exams = Exam.objects.all().order_by('-created_at')
+    focus = request.GET.get('focus')
+    on = request.GET.get('filter_id')
+    is_solved = request.GET.get('is_solved')
+    print(focus, on, is_solved)
+    all_exams = exam_list_filter(focus, on, is_solved)
     paginator = Paginator(all_exams, 12)
     page_number = request.GET.get('page')
     page_exams = paginator.get_page(page_number)
-    return render(request, 'exams/exam_list.html', {'exams': page_exams})
+    return render(request, 'exams/exam_list.html', {'exams': page_exams, 'grade_id': request.user.student.grade.id})
 
 
 @login_required(login_url='login')
@@ -94,3 +101,17 @@ def delete_exam(request, id):
     exam = get_object_or_404(Exam, id=id)
     exam.delete()
     return redirect('exams')
+
+
+def get_focus_instances(request):
+    from curriculum.models import Grade
+    focus = request.GET.get('focus')
+    grade_id = request.GET.get('grade')
+    print(focus, grade_id)
+    grade = get_object_or_404(Grade, pk=grade_id)
+    options = get_options(grade, focus)
+    return JsonResponse(
+        {
+            'options': [{'id': option.id, 'name': str(option)} for option in options]
+        }
+    )

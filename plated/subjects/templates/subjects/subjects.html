@@ -20,9 +20,9 @@
             <div class="col-md-4 col-sm-1 mb-3" id="card-div">
                 <a class="nav-item nav-link" href="{% url "units-list" subject.id %}">
                     <div class="card">
-                        <img src="{{ subject.cover.url }}" class="card-img-top" alt="{{ subject.name }}">
+                        <img src="{{ subject.cover.url }}" class="card-img-top" alt="{{ subject.title }}">
                         <div class="card-body">
-                            <h5 class="card-title">{{ subject.name }}</h5>
+                            <h5 class="card-title">{{ subject.title }}</h5>
                             <p class="card-text">{{ subject.caption }}</p>
                         </div>
                     </div>

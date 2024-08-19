@@ -16,7 +16,11 @@ class Exam(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True)
     duration = models.DurationField(default=timedelta(hours=1), null=True, blank=True)
     questions = models.ManyToManyField(Question)
-    score = models.IntegerField(default=0)
+    score = models.IntegerField(null=True, blank=True)
+
+    @property
+    def max_score(self):
+        return self.questions.count()
 
     def __str__(self):
         return f"Exam on {self.subject or self.unit or self.chapter or self.lesson} by {self.student}"
