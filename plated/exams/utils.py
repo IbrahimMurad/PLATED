@@ -97,8 +97,7 @@ def new_exam(student, focus, id):
     return exam
 
 
-def exam_list_filter(focus, on, is_solved):
-    exams = Exam.objects.all()
+def exam_list_filter(exams, focus, on, is_solved):
     focus_condition = {
         'subject': {'unit': None, 'chapter': None, 'lesson': None},
         'unit': {'subject': None, 'chapter': None, 'lesson': None},

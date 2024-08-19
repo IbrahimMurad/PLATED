@@ -2,9 +2,9 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import Exam, StudentAnswer
-from .forms import ExamForm, NewExamForm
+from .forms import ExamForm
 from questions.models import Answer
-from datetime import datetime
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .utils import (
@@ -46,7 +46,7 @@ def exam(request, id):
                 if answer.is_correct:
                     score += 1
             exam.score = score
-            exam.solved_at = datetime.utcnow()
+            exam.solved_at = timezone.now()
             exam.save()
             messages.success(request, "Your answers have been corrected successfully.")
             return redirect('solved-exam', id=exam.id)
@@ -88,8 +88,9 @@ def exam_list(request):
     focus = request.GET.get('focus')
     on = request.GET.get('filter_id')
     is_solved = request.GET.get('is_solved')
-    print(focus, on, is_solved)
-    all_exams = exam_list_filter(focus, on, is_solved)
+    all_exams = Exam.objects.filter(student=request.user.student)
+    if focus and on and is_solved:
+        all_exams = exam_list_filter(all_exams, focus, on, is_solved)
     paginator = Paginator(all_exams, 12)
     page_number = request.GET.get('page')
     page_exams = paginator.get_page(page_number)

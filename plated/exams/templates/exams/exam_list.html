@@ -33,7 +33,6 @@
     <h1 class="border-bottom mb-3">Exam List</h1>
     <div class="nav navbar-expand-lg justify-content-sm-center border-bottom mb-lg-5 p-2">
         <form action="{% url "exams" %}" method="get" class="row w-100 justify-content-between align-content-center align-items-center">
-            {% csrf_token %}
             <div class="filter">
                 <div class="focus-select">
                     <label for="focus_filter" class="d-flex m-1 font-weight-bold">Focus</label>
@@ -59,7 +58,7 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-info">Filter</button>
+            <button type="submit" class="btn btn-info m-1">Filter</button>
         </form>
     </div>
     <div class="d-flex flex-row flex-wrap align-content-sm-start">
