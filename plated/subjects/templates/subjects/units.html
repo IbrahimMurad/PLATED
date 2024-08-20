@@ -19,15 +19,15 @@
         <!-- Loop through each unit in the subject -->
         {% for unit in units %}
             <div class="col-md-4 mb-4" id="card-div">
-                <a class="nav-item nav-link" href="{% url "chapters-list" unit.id %}">
-                    <div class="card">
-                        <img src="{{ unit.cover.url }}" class="card-img-top" alt="{{ unit.title }}">
-                        <div class="card-body">
+                <div class="card">
+                    <img src="{{ unit.cover.url }}" class="card-img-top" alt="{{ unit.title }}">
+                    <div class="card-body">
+                        <a class="nav-item nav-link" href="{% url "chapters-list" unit.id %}">
                             <h5 class="card-title">Unit {{ unit.number }}: {{ unit.title }}</h5>
-                            <p class="card-text">{{ unit.caption }}</p>
-                        </div>
+                        </a>
+                        <p class="card-text">{{ unit.caption }}</p>
                     </div>
-                </a>
+                </div>
             </div>
         {% endfor %}
     </div>

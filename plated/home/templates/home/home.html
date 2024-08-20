@@ -13,6 +13,33 @@
     </div>
     <section class="lesson">
         <div class="lesson-header">
+            <h3>Favorite Lessons</h3>
+            <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#favorite-lessons" aria-expanded="false" aria-controls="favorite-lessons">
+                <i class="bi bi-chevron-down"></i>
+            </button>
+        </div>
+        <div id="favorite-lessons" class="lesson-content collapse show">
+            <div class="d-flex flex-row flex-wrap justify-content-sm-start">
+                {% for lesson in user.student.tagged_lessons.all %}
+                <div class="col-md-4 mb-4" id="card-div">
+                    <div class="card">
+                        <img src="{{ lesson.cover.url }}" class="card-img-top" alt="{{ lesson.title }}">
+                        <div class="card-body">
+                            <a class="nav-item nav-link" href="{% url "lesson-details" lesson.id %}">
+                                <h5 class="card-title article-title">
+                                    {% if lesson.number > 0 %}Lesson {{ lesson.number }}: {% endif %}{{ lesson.title }}
+                                </h5>
+                            </a>
+                            <p class="card-text">{{ lesson.caption }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section class="lesson">
+        <div class="lesson-header">
             <h3>Recently Solved Exams</h3>
             <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#solved-exams" aria-expanded="false" aria-controls="solved-exams">
                 <i class="bi bi-chevron-down"></i>
@@ -62,6 +89,7 @@
                 {% endfor %}
             </div>
         </div>
+        <a href="{% url "exams" %}?is_solved=true">see all</a>
     </section>
     <section class="lesson">
         <div class="lesson-header">
@@ -71,7 +99,7 @@
             </button>
         </div>
         <div id="unsolved-exams" class="lesson-content collapse show">
-            <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+            <div class="d-flex flex-row flex-wrap justify-content-sm-start">
                 {% for exam in unsolved_exams %}
                     <div class="card border-secondary m-3 col-3" style="min-width: max-content;">
                         <div class="card-body p-3">
@@ -114,5 +142,6 @@
                 {% endfor %}
             </div>
         </div>
+        <a href="{% url "exams" %}?is_solved=false">see all</a>
     </section>
 {% endblock %}

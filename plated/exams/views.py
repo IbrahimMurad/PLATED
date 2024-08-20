@@ -85,6 +85,7 @@ def solved_exam(request, id):
 
 @login_required(login_url='login')
 def exam_list(request):
+    print(request.build_absolute_uri().split('page=')[0])
     focus = request.GET.get('focus')
     on = request.GET.get('filter_id')
     is_solved = request.GET.get('is_solved')
@@ -94,7 +95,18 @@ def exam_list(request):
     paginator = Paginator(all_exams, 12)
     page_number = request.GET.get('page')
     page_exams = paginator.get_page(page_number)
-    return render(request, 'exams/exam_list.html', {'exams': page_exams, 'grade_id': request.user.student.grade.id})
+    url = request.build_absolute_uri().split('page=')[0]
+    if url.endswith('/'):
+        url = url + '?'
+    elif url.endswith('?') or url.endswith('&'):
+        url = url
+    else:
+        url = url + '&'
+    return render(request, 'exams/exam_list.html', {
+        'exams': page_exams,
+        'grade_id': request.user.student.grade.id,
+        'url': url,
+        })
 
 
 @login_required(login_url='login')

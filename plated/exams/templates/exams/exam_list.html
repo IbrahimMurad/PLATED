@@ -47,7 +47,11 @@
                 <div class="focus-element-select">
                     <label for="filter_id" class="d-flex m-1 font-weight-bold"> For </span>
                     </label>
-                    <select name="filter_id" class="select form-control" disabled="" id="filter_id"></select>
+                    <select name="filter_id" class="select form-control" disabled="" id="filter_id">
+                        {% if on %}
+                        <option value="on" selected></option>
+                        {% endif %}
+                    </select>
                 </div>
                 <div class="solved-select">
                     <label for="solved" class="d-flex m-1 font-weight-bold"> Solved </label>
@@ -108,8 +112,8 @@
         <span class="step-links">
             <span class="previous">
                 {% if exams.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ exams.previous_page_number }}"> &lt; previous</a>
+                <a href="{{ url }}page=1">&laquo; first</a>
+                <a href="{{ url }}page={{ exams.previous_page_number }}"> &lt; previous</a>
             {% else %}
                 <span class="disabled">&laquo; first</span>
                 <span class="disabled"> &lt; previous</span>
@@ -120,8 +124,8 @@
             </span>
             <span class="next">
                 {% if exams.has_next %}
-                    <a href="?page={{ exams.next_page_number }}">next &gt; </a>
-                    <a href="?page={{ exams.paginator.num_pages }}">last &raquo;</a>
+                    <a href="{{ url }}page={{ exams.next_page_number }}">next &gt; </a>
+                    <a href="{{ url }}page={{ exams.paginator.num_pages }}">last &raquo;</a>
                 {% else %}
                     <span class="disabled">next &gt;</span>
                     <span class="disabled">last &raquo;</span>

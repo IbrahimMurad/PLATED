@@ -1,8 +1,89 @@
-
 body {
-    box-sizing: border-box;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    font-weight: 450;
+    font-family: Arial, sans-serif;
+    background: #fafafa;
+    color: #333;
+    margin-top: 5rem;
+}
+
+.site-header {
+    color: #ffffff;
+    padding: 10px 0;
+    background-color: #417690;
+}
+
+#side-nav-bar {
+    position: fixed;
+    top: relative;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    border-right: solid 1px #afafaf;
+    background-color: #fdfdfd;
+    padding: 15px;
+    font-weight: bold;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+#side-nav-bar a {
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+}
+
+#side-nav-bar a:hover,
+#account-btn:hover {
+    background-color: #417690;
+    color: white;
+}
+
+#toggleBtn {
+    background-color: #417690;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 10px;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #side-nav-bar {
+        transform: translateX(-100%);
+    }
+
+    #side-nav-bar.show {
+        transform: translateX(0);
+    }
+
+    #toggleBtn {
+        display: block;
+    }
+}
+
+.content-section {
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .content-section {
+        margin-left: 0;
+    }
+}
+
+
+#card-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 30%;
+    min-width: 22rem;
 }
 
 .card {
@@ -15,6 +96,13 @@ body {
     box-shadow: 5px 6px 8px 7px rgba(0, 0, 0, 0.24);
     transform: translate(-3px, -3px);
 }
+
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+}
+
 
 .card-title {
     font-size: 1.5em;
@@ -78,4 +166,62 @@ dt {
     position: relative;
     top: 10px;
     text-align: center;
+}
+
+
+div[id^="div_id_question_"] label.requiredField {
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+}
+.pagination .step-links {
+    display: inline-block;
+}
+.pagination .pagination-link {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.pagination .pagination-link:hover {
+    background-color: #f0f0f0;
+}
+.pagination .current {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+div.new-exam-body-params {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 75%;
+}
+
+div.focus-select,
+div.solved-select,
+div.focus-element-select {
+    width: fit-content;
+    display: flex;
+    margin-right: 15px;
+}
+
+label[for="id_id"] {
+    min-width: max-content;
+}
+
+.filter {
+    display: flex;
+}
+
+#bookmarkIcon {
+    cursor: pointer;
 }

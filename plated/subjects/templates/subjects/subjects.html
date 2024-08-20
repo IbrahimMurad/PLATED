@@ -18,15 +18,15 @@
         <!-- Loop through each subject -->
         {% for subject in subjects %}
             <div class="col-md-4 col-sm-1 mb-3" id="card-div">
-                <a class="nav-item nav-link" href="{% url "units-list" subject.id %}">
-                    <div class="card">
-                        <img src="{{ subject.cover.url }}" class="card-img-top" alt="{{ subject.title }}">
-                        <div class="card-body">
+                <div class="card">
+                    <img src="{{ subject.cover.url }}" class="card-img-top" alt="{{ subject.title }}">
+                    <div class="card-body">
+                        <a class="nav-item nav-link" href="{% url "units-list" subject.id %}">
                             <h5 class="card-title">{{ subject.title }}</h5>
-                            <p class="card-text">{{ subject.caption }}</p>
-                        </div>
+                        </a>
+                        <p class="card-text">{{ subject.caption }}</p>
                     </div>
-                </a>
+                </div>
             </div>
         {% endfor %}
     </div>

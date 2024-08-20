@@ -17,7 +17,8 @@ body {
     left: 0;
     height: 100%;
     width: 250px;
-    background-color: #e6e6e6;
+    border-right: solid 1px #afafaf;
+    background-color: #fdfdfd;
     padding: 15px;
     font-weight: bold;
     transform: translateX(0);

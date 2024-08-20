@@ -20,15 +20,15 @@
         <!-- Loop through each chapter in the unit -->
         {% for chapter in chapters %}
             <div class="col-md-4 mb-4" id="card-div">
-                <a class="nav-item nav-link" href="{% url "lessons-list" chapter.id %}">
-                    <div class="card">
-                        <img src="{{ chapter.cover.url }}" class="card-img-top" alt="{{ chapter.title }}">
-                        <div class="card-body">
+                <div class="card">
+                    <img src="{{ chapter.cover.url }}" class="card-img-top" alt="{{ chapter.title }}">
+                    <div class="card-body">
+                        <a class="nav-item nav-link" href="{% url "lessons-list" chapter.id %}">
                             <h5 class="card-title">Chapter {{ chapter.number }}: {{ chapter.title }}</h5>
-                            <p class="card-text">{{ chapter.caption }}</p>
-                        </div>
+                        </a>
+                        <p class="card-text">{{ chapter.caption }}</p>
                     </div>
-                </a>
+                </div>
             </div>
         {% endfor %}
     </div>
