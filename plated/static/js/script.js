@@ -4,6 +4,11 @@ document.getElementById('toggleBtn').addEventListener('click', function() {
     sidebar.classList.toggle('show');
 });
 
+document.getElementById('closeBtn').addEventListener('click', function() {
+    const sidebar = document.getElementById('side-nav-bar');
+    sidebar.classList.toggle('show');
+});
+
 $('#id_focus').change(function() {
     if ($(this).val() === '' || $(this).val() === null) {
         $('#id_instance').empty();
@@ -75,7 +80,6 @@ $('#bookmarkIcon').click(async function() {
     .then(response => response.json())
     .then(data => {
         if (!data.success) {
-            // Revert the icon class if the request failed
             if (isBookmarked) {
                 bookmarkIcon.classList.remove('far');
                 bookmarkIcon.classList.add('fas');

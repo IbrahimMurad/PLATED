@@ -5,25 +5,46 @@ body {
     margin-top: 5rem;
 }
 
+#project-name.navbar-brand {
+    font-size: 1.8em;
+    font-weight:900;
+    color: black;
+    text-align: center;
+    position: relative;
+    top: 10px;
+    padding: 0;
+    margin-bottom: 3rem;
+}
+
+#project-name.navbar-brand:hover {
+    color: #417690;
+    text-align: center;
+    background-color: #ebebeb;
+}
+
 .site-header {
     color: #ffffff;
-    padding: 10px 0;
+    padding: 10px 50px;
     background-color: #417690;
+    height: 4rem;
+    font-size: 1.2rem;
+    z-index: 1;
 }
 
 #side-nav-bar {
     position: fixed;
-    top: relative;
+    top: 0;
     left: 0;
     height: 100%;
     width: 250px;
     border-right: solid 1px #afafaf;
-    background-color: #fdfdfd;
+    background-color: #ebebeb;
     padding: 15px;
+    font-size: 1.2em;
     font-weight: bold;
     transform: translateX(0);
     transition: transform 0.3s ease;
-    z-index: 1;
+    z-index: 2;
 }
 
 #side-nav-bar a {
@@ -32,6 +53,7 @@ body {
     padding: 10px;
     display: block;
     border-radius: 5px;
+    margin: 8px;
 }
 
 #side-nav-bar a:hover,
@@ -51,6 +73,17 @@ body {
     display: none;
 }
 
+#closeBtn {
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    position: fixed;
+    top: 0px;
+    right: 10px;
+    display: none;
+}
+
 @media (max-width: 768px) {
     #side-nav-bar {
         transform: translateX(-100%);
@@ -61,6 +94,10 @@ body {
     }
 
     #toggleBtn {
+        display: block;
+    }
+
+    #closeBtn {
         display: block;
     }
 }
