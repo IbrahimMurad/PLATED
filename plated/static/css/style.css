@@ -220,3 +220,7 @@ label[for="id_id"] {
 .filter {
     display: flex;
 }
+
+#bookmarkIcon {
+    cursor: pointer;
+}

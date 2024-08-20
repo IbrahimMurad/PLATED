@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="{% static "css/style.css" %}">
@@ -20,10 +21,10 @@
 <body>
     <header class="site-header fixed-top d-flex align-items-center">
         <button class="toggle-btn" id="toggleBtn">&#9776;</button>
-        <a class="navbar-brand font-weight-bold text-light ml-lg-5 pl-1 position-relative" href="#">PLATED</a>
+        <a class="navbar-brand font-weight-bold text-light ml-lg-5 pl-1 position-relative" href="{% url "home" %}">PLATED</a>
         <div class="header-right ml-auto d-flex align-items-center">
             {% if user.is_authenticated %}
-            <div class="pr-2"><strong class="pr-2">Welcome, </strong> <a href="#" class="username text-light">{{ user.student.first_name }} {{ user.student.last_name }}</a></div>
+            <div class="pr-2"><strong class="pr-2">Welcome, </strong> <a href="{% url "home" %}" class="username text-light">{{ user.student.first_name }} {{ user.student.last_name }}</a></div>
             <div class="text-light pl-2">
                 <span>|</span>
                 <span class="pr-2 pl-2"> {{ user.student.grade.title }} </span>
@@ -43,7 +44,7 @@
     </header>
     <div class="d-flex flex-grow-2">
         <nav id="side-nav-bar" class="side-nav">
-            <a href="#">Home</a>
+            <a href="{% url "home" %}">Home</a>
             <a href="#">Dashboard</a>
             <a href="{% url "subjects-list" %}">Curriculum</a>
             <a href="{% url "exams" %}">Exams</a>

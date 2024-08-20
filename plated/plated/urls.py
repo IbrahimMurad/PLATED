@@ -42,6 +42,7 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('exam/', include('exams.urls')),
     path(r'^_nested_admin/', include('nested_admin.urls')),
+    path('', include('home.urls')),
 ]
 
 if settings.DEBUG:

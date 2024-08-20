@@ -20,8 +20,14 @@
         </ol>
     </nav>
     <article class="lesson">
-        <section class="lesson-title">
+        <section class="lesson-title d-flex flex-row justify-content-between">
             <h1 class="">{% if lesson.number > 0 %} Lesson {{ lesson.number }} : {% endif %}{{ lesson.title }}</h1>
+            <input type="hidden" id="lesson_id" value="{{ lesson.id }}"></input>
+            {% if lesson in user.student.tagged_lessons.all %}
+            <div class="text-secondary"><i id="bookmarkIcon" class="fas fa-bookmark bookmark fa-2x"></i></div>
+            {% else %}
+            <div class="text-secondary"><i id="bookmarkIcon" class="far fa-bookmark bookmark fa-2x"></i></div>
+            {% endif %}
         </section>
         <section class="lesson">
             <div class="lesson-header">

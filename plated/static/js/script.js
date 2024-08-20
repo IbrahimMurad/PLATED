@@ -44,6 +44,49 @@ $('#focus_filter').change(function() {
     );
 });
 
+$('#bookmarkIcon').click(async function() {
+    let isBookmarked;
+    if (bookmarkIcon.classList.contains('fas')) {
+        isBookmarked = true;
+        bookmarkIcon.classList.remove('fas');
+        bookmarkIcon.classList.add('far');
+        
+    } else {
+        isBookmarked = false;
+        bookmarkIcon.classList.remove('far');
+        bookmarkIcon.classList.add('fas');
+    }
+
+    const lesson_id = $('#lesson_id').val();
+    const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
+    console.log(lesson_id, isBookmarked, csrftoken);
+    fetch(`/subject/lesson/${lesson_id}/tag/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify(
+            {
+                is_bookmarked: !isBookmarked,
+            }
+        )
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            // Revert the icon class if the request failed
+            if (isBookmarked) {
+                bookmarkIcon.classList.remove('far');
+                bookmarkIcon.classList.add('fas');
+            } else {
+                bookmarkIcon.classList.remove('fas');
+                bookmarkIcon.classList.add('far');
+            }
+        }
+    });
+});
+
 
 document.querySelector('.dropdown-btn').addEventListener('click', function() {
     const dropdownContainer = this.nextElementSibling;

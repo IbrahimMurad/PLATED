@@ -1,4 +1,6 @@
+import json
 from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 from .models import Subject, Unit, Chapter, Lesson
 from curriculum.models import CURRENT_SEMESTER
 from django.contrib.auth.decorators import login_required
@@ -117,3 +119,21 @@ def lesson_details_view(request, id):
         'exam_form': exam_form,
     }
     return render(request, 'subjects/lesson_details.html', context)
+
+@login_required(login_url='login')
+def tag_lesson_view(request, id):
+    if request.method == 'POST':
+        is_bookmarked = json.loads(request.body.decode('utf-8')).get('is_bookmarked')
+        try:
+            lesson = Lesson.objects.get(id=id)
+            student = request.user.student
+            if is_bookmarked:
+                lesson.tagged_students.add(student)
+            else:
+                lesson.tagged_students.remove(student)
+            print(student.tagged_lessons.all())
+            return JsonResponse({'success': True})
+        except Lesson.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Lesson not found'})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
