@@ -1,3 +1,4 @@
+from django.views.decorators.cache import cache_page
 import json
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
@@ -12,6 +13,7 @@ from subjects.utils import (
 )
 
 
+@cache_page(60 * 60)
 @login_required(login_url='login')
 def subjects_view(request):
     if not CURRENT_SEMESTER:
@@ -24,6 +26,7 @@ def subjects_view(request):
         })
 
 
+@cache_page(60 * 60)
 @login_required(login_url='login')
 def units_view(request, id):
     if not CURRENT_SEMESTER:
@@ -49,6 +52,7 @@ def units_view(request, id):
     return render(request, 'subjects/units.html', context)
 
 
+@cache_page(60 * 60)
 @login_required(login_url='login')
 def chapters_view(request, id):
     if not CURRENT_SEMESTER:
@@ -74,6 +78,7 @@ def chapters_view(request, id):
     return render(request, 'subjects/chapters.html', context)
 
 
+@cache_page(60 * 60)
 @login_required(login_url='login')
 def lessons_view(request, id):
     if not CURRENT_SEMESTER:
@@ -100,6 +105,7 @@ def lessons_view(request, id):
     return render(request, 'subjects/lessons.html', context)
 
 
+@cache_page(60 * 60)
 @login_required(login_url='login')
 def lesson_details_view(request, id):
     if not CURRENT_SEMESTER:
@@ -120,6 +126,8 @@ def lesson_details_view(request, id):
     }
     return render(request, 'subjects/lesson_details.html', context)
 
+
+@cache_page(60 * 60)
 @login_required(login_url='login')
 def tag_lesson_view(request, id):
     if request.method == 'POST':

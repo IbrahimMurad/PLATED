@@ -41,6 +41,7 @@ urlpatterns = [
         name="password_reset_complete"),
     path('user/', include('users.urls')),
     path('exam/', include('exams.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path(r'^_nested_admin/', include('nested_admin.urls')),
     path('', include('home.urls')),
 ]

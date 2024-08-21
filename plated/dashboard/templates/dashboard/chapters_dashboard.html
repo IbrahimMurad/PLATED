@@ -1,0 +1,31 @@
+{% extends "subjects/base.html" %}
+{% load static %}
+{% block title %}Chapters Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="font-weight-bold">Chapters Dashboard</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for chapter in chapters %}
+                <section class="lesson" style="width: fit-content; min-width: 12in">
+                    <div class="lesson-header">
+                        <h3> {{ chapter.title }} Score Progress</h3>
+                        <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#{{chapter.title|slugify}}-plot" aria-expanded="false" aria-controls="{{chapter.title|slugify}}-plot">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="{{chapter.title|slugify}}-plot" class="lesson-content collapse show">
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <img src="{{ chapter.plot_url }}" alt="{{chapter.title|slugify}} Score Plot" srcset="">
+                        </div>
+                        <a href="{{ chapter.plot_url }}" download="{{chapter.title|slugify}}_progress.jpg" class="btn btn-primary" alt="download {{chapter.title|slugify}} score plot">
+                            <i class="fa fa-download" aria-hidden="false"></i>
+                        </a>
+                    </div>
+                </section>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "subjects/base.html" %}
+{% load static %}
+{% block title %}Units Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="font-weight-bold">Units Dashboard</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for unit in units %}
+                <section class="lesson" style="width: fit-content; min-width: 12in">
+                    <div class="lesson-header">
+                        <h3> {{ unit.title }} Score Progress</h3>
+                        <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#{{unit.title|slugify}}-plot" aria-expanded="false" aria-controls="{{unit.title|slugify}}-plot">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="{{unit.title|slugify}}-plot" class="lesson-content collapse show">
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <img src="{{ unit.plot_url }}" alt="{{unit.title|slugify}} Score Plot" srcset="">
+                        </div>
+                        <a href="{{ unit.plot_url }}" download="{{unit.title|slugify}}_progress.jpg" class="btn btn-primary" alt="download {{unit.title|slugify}} score plot">
+                            <i class="fa fa-download" aria-hidden="false"></i>
+                        </a>
+                    </div>
+                </section>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

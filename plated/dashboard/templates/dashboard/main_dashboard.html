@@ -1,0 +1,93 @@
+{% extends "subjects/base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="font-weight-bold">Dashboard</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="lesson" style="width: fit-content; min-width: 12in">
+                    <div class="lesson-header">
+                        <h3>Overall Average Score Progress</h3>
+                        <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#overall-plot" aria-expanded="false" aria-controls="overall-plot">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="overall-plot" class="lesson-content collapse show">
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <img src="{{ overall_plot_url }}" alt="Overall Score Progress Plot" srcset="">
+                        </div>
+                        <a href="{{ overall_plot_url }}" download="overall_progress.jpg" class="btn btn-primary" alt="download overall score plot">
+                            <i class="fa fa-download" aria-hidden="false"></i>
+                        </a>
+                    </div>
+                </section>
+                <section class="lesson" style="width: fit-content; min-width: 12in">
+                    <div class="lesson-header">
+                        <a href="{% url "subjects-dashboard" %}" class="text-decoration-none"><h3>Subjects Average Score Progress</h3></a>
+                        <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#overall-subjects-plot" aria-expanded="false" aria-controls="overall-subjects-plot">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="overall-subjects-plot" class="lesson-content collapse show">
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <img src="{{ subjects_plot_url }}" alt="Overall Score Progress Plot" srcset="">
+                        </div>
+                        <a href="{{ subjects_plot_url }}" download="subjects_progress.jpg" class="btn btn-primary" alt="download overall score plot">
+                            <i class="fa fa-download" aria-hidden="false"></i>
+                        </a>
+                    </div>
+                </section>
+                <section class="lesson" style="width: fit-content; min-width: 12in">
+                    <div class="lesson-header">
+                        <a href="{% url "units-dashboard" %}" class="text-decoration-none"><h3>Units Average Score Progress</h3></a>
+                        <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#overall-units-plot" aria-expanded="false" aria-controls="overall-units-plot">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="overall-units-plot" class="lesson-content collapse show">
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <img src="{{ units_plot_url }}" alt="Overall Score Progress Plot" srcset="">
+                        </div>
+                        <a href="{{ units_plot_url }}" download="units_progress.jpg" class="btn btn-primary" alt="download overall score plot">
+                            <i class="fa fa-download" aria-hidden="false"></i>
+                        </a>
+                    </div>
+                </section>
+                <section class="lesson" style="width: fit-content; min-width: 12in">
+                    <div class="lesson-header">
+                        <a href="{% url "chapters-dashboard" %}" class="text-decoration-none"><h3>Chapters Average Score Progress</h3></a>
+                        <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#overall-chapters-plot" aria-expanded="false" aria-controls="overall-chapters-plot">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="overall-chapters-plot" class="lesson-content collapse show">
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <img src="{{ chapters_plot_url }}" alt="Overall Score Progress Plot" srcset="">
+                        </div>
+                        <a href="{{ chapters_plot_url }}" download="chapters_progress.jpg" class="btn btn-primary" alt="download overall score plot">
+                            <i class="fa fa-download" aria-hidden="false"></i>
+                        </a>
+                    </div>
+                </section>
+                <section class="lesson" style="width: fit-content; min-width: 12in">
+                    <div class="lesson-header">
+                        <a href="{% url "lessons-dashboard" %}" class="text-decoration-none"><h3>Lessons Average Score Progress</h3></a>
+                        <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#overall-lessons-plot" aria-expanded="false" aria-controls="overall-lessons-plot">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="overall-lessons-plot" class="lesson-content collapse show">
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <img src="{{ lessons_plot_url }}" alt="Lessons Avg Score Progress Plot" srcset="">
+                        </div>
+                        <a href="{{ lessons_plot_url }}" download="lessons_progress.jpg" class="btn btn-primary" alt="download lessons score plot">
+                            <i class="fa fa-download" aria-hidden="false"></i>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

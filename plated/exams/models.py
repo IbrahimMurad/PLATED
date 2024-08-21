@@ -9,11 +9,11 @@ class Exam(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     solved_at = models.DateTimeField(null=True, blank=True)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=True, blank=True)
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='exams')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True, related_name='exams')
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=True, blank=True, related_name='exams')
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, null=True, blank=True, related_name='exams')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True, related_name='exams')
     duration = models.DurationField(default=timedelta(hours=1), null=True, blank=True)
     questions = models.ManyToManyField(Question)
     score = models.IntegerField(null=True, blank=True)
@@ -21,6 +21,10 @@ class Exam(models.Model):
     @property
     def max_score(self):
         return self.questions.count()
+    
+    @property
+    def score_percentage(self):
+        return (self.score / self.max_score) * 100
 
     def __str__(self):
         return f"Exam on {self.subject or self.unit or self.chapter or self.lesson} by {self.student}"

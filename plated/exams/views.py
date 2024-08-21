@@ -6,6 +6,7 @@ from .forms import ExamForm
 from questions.models import Answer
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
 from django.contrib import messages
 from .utils import (
     get_exam_title,
@@ -15,7 +16,9 @@ from .utils import (
 )
 
 
+
 @login_required(login_url='login')
+@cache_page(60 * 60)
 def generate_exam(request):
     focus = request.POST.get('focus')
     id = request.POST.get('id')
@@ -28,6 +31,7 @@ def generate_exam(request):
 
 
 @login_required(login_url='login')
+@cache_page(60 * 60)
 def exam(request, id):
     exam = get_object_or_404(Exam, pk=id)
     if request.method == 'POST':
@@ -62,6 +66,7 @@ def exam(request, id):
 
 
 @login_required(login_url='login')
+@cache_page(60 * 60)
 def solved_exam(request, id):
     exam = Exam.objects.get(id=id)
     context = {
@@ -84,6 +89,7 @@ def solved_exam(request, id):
 
 
 @login_required(login_url='login')
+@cache_page(60 * 60)
 def exam_list(request):
     print(request.build_absolute_uri().split('page=')[0])
     focus = request.GET.get('focus')
@@ -116,6 +122,7 @@ def delete_exam(request, id):
     return redirect('exams')
 
 
+@cache_page(60 * 60)
 def get_focus_instances(request):
     from curriculum.models import Grade
     focus = request.GET.get('focus')

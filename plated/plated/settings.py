@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'exams.apps.ExamsConfig',
     'home.apps.HomeConfig',
+    'dashboard.apps.DashboardConfig',
     'nested_admin',
     'crispy_forms',
     'crispy_bootstrap4',
