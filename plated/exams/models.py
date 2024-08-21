@@ -24,6 +24,8 @@ class Exam(models.Model):
     
     @property
     def score_percentage(self):
+        if self.max_score == 0:
+            return 0
         return (self.score / self.max_score) * 100
 
     def __str__(self):

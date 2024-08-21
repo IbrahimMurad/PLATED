@@ -34,7 +34,7 @@ def plot(name, data, id):
     return plt_url
 
 
-def score_progress(user, focus):
+def score_progress(user, focus, filter):
     model = {
         'lesson': Lesson,
         'chapter': Chapter,
@@ -42,75 +42,14 @@ def score_progress(user, focus):
         'subject': Subject,
     }
     focus_instances = model[focus].objects.filter(exams__student=user.student).distinct()
+    focus_instances = focus_instances.filter(**filter)
     focus_scores = []
     for  instance in focus_instances:
         solved_exams = instance.exams.filter(student=user.student, score__isnull=False)
         scores = [exam.score_percentage for exam in solved_exams]
         focus_scores.append({
+            'id': instance.id,
             'title': instance.title,
             'scores': scores
             })
     return focus_scores
-
-
-# lessons_exams = all_solved_exams.filter(lesson__isnull=False)
-# chapters_exams = all_solved_exams.filter(chapter__isnull=False)
-# units_exams = all_solved_exams.filter(unit__isnull=False)
-# subjects_exams = all_solved_exams.filter(subject__isnull=False)
-
-# lessons_with_solved_exams = Lesson.objects.filter(id__in=lessons_exams.values_list('lesson', flat=True).distinct())
-# chapters_with_solved_exams = Chapter.objects.filter(id__in=chapters_exams.values_list('chapter', flat=True).distinct())
-# units_with_solved_exams = Unit.objects.filter(id__in=units_exams.values_list('unit', flat=True).distinct())
-# subjects_with_solved_exams = Subject.objects.filter(id__in=subjects_exams.values_list('subject', flat=True).distinct())
-
-# lessons = [
-#     {
-#         'title': lesson.title,
-#         'solved_exams': lessons_exams.filter(lesson=lesson),
-#     }
-#     for lesson in lessons_with_solved_exams
-# ]
-
-# for lesson in lessons:
-#     print(lesson['title'])
-#     for exam in lesson['solved_exams']:
-#         print(f"{str(exam)} : {exam.score}")
-
-# chapters = [
-#     {
-#         'title': chapter.title,
-#         'solved_exams': chapters_exams.filter(chapter=chapter),
-#     }
-#     for chapter in chapters_with_solved_exams
-# ]
-
-# for chapter in chapters:
-#     print(chapter['title'])
-#     for exam in chapter['solved_exams']:
-#         print(f"{str(exam)} : {exam.score}")
-
-# units = [
-#     {
-#         'title': unit.title,
-#         'solved_exams': units_exams.filter(unit=unit),
-#     }
-#     for unit in units_with_solved_exams
-# ]
-
-# for unit in units:
-#     print(unit['title'])
-#     for exam in unit['solved_exams']:
-#         print(f"{str(exam)} : {exam.score}")
-
-# subjects = [
-#     {
-#         'title': subject.title,
-#         'solved_exams': subjects_exams.filter(subject=subject),
-#     }
-#     for subject in subjects_with_solved_exams
-# ]
-
-# for subject in subjects:
-#     print(subject['title'])
-#     for exam in subject['solved_exams']:
-#         print(f"{str(exam)} : {exam.score}")

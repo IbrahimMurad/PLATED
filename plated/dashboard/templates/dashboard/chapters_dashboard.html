@@ -10,7 +10,7 @@
                 {% for chapter in chapters %}
                 <section class="lesson" style="width: fit-content; min-width: 12in">
                     <div class="lesson-header">
-                        <h3> {{ chapter.title }} Score Progress</h3>
+                        <a href="{% url "lessons-dashboard" chapter.id %}" class="text-decoration-none"><h3> {{ chapter.title }} Score Progress</h3></a>
                         <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#{{chapter.title|slugify}}-plot" aria-expanded="false" aria-controls="{{chapter.title|slugify}}-plot">
                             <i class="bi bi-chevron-down"></i>
                         </button>

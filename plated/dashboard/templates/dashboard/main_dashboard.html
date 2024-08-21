@@ -3,9 +3,10 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h1 class="font-weight-bold">Dashboard</h1>
+<h1 class="font-weight-bold">Main Dashboard</h1>
     <div class="container">
         <div class="row">
+            <a href="{% url "subjects-dashboard" %}" class="btn btn-info ml-auto">Detailed Dashboard</a>
             <div class="col-md-12">
                 <section class="lesson" style="width: fit-content; min-width: 12in">
                     <div class="lesson-header">
@@ -41,7 +42,7 @@
                 </section>
                 <section class="lesson" style="width: fit-content; min-width: 12in">
                     <div class="lesson-header">
-                        <a href="{% url "units-dashboard" %}" class="text-decoration-none"><h3>Units Average Score Progress</h3></a>
+                        <h3>Units Average Score Progress</h3>
                         <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#overall-units-plot" aria-expanded="false" aria-controls="overall-units-plot">
                             <i class="bi bi-chevron-down"></i>
                         </button>
@@ -57,7 +58,7 @@
                 </section>
                 <section class="lesson" style="width: fit-content; min-width: 12in">
                     <div class="lesson-header">
-                        <a href="{% url "chapters-dashboard" %}" class="text-decoration-none"><h3>Chapters Average Score Progress</h3></a>
+                        <h3>Chapters Average Score Progress</h3>
                         <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#overall-chapters-plot" aria-expanded="false" aria-controls="overall-chapters-plot">
                             <i class="bi bi-chevron-down"></i>
                         </button>
@@ -73,7 +74,7 @@
                 </section>
                 <section class="lesson" style="width: fit-content; min-width: 12in">
                     <div class="lesson-header">
-                        <a href="{% url "lessons-dashboard" %}" class="text-decoration-none"><h3>Lessons Average Score Progress</h3></a>
+                        <h3>Lessons Average Score Progress</h3>
                         <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#overall-lessons-plot" aria-expanded="false" aria-controls="overall-lessons-plot">
                             <i class="bi bi-chevron-down"></i>
                         </button>
