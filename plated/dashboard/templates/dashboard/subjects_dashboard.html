@@ -3,6 +3,11 @@
 {% block title %}Subjects Dashboard{% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">subjects</li>
+    </ol>
+</nav>
 <h1 class="font-weight-bold">Subjects Dashboard</h1>
     <div class="container">
         <div class="row">
@@ -16,12 +21,14 @@
                         </button>
                     </div>
                     <div id="{{subject.title|slugify}}-plot" class="lesson-content collapse show">
+                        {% if subject.plot_url %}
                         <div class="d-flex flex-row flex-wrap justify-content-sm-center">
                             <img src="{{ subject.plot_url }}" alt="{{subject.title|slugify}} Score Plot" srcset="">
                         </div>
                         <a href="{{ subject.plot_url }}" download="{{subject.title|slugify}}_progress.jpg" class="btn btn-primary" alt="download {{subject.title|slugify}} score plot">
                             <i class="fa fa-download" aria-hidden="false"></i>
                         </a>
+                        {% endif %}
                     </div>
                 </section>
                 {% endfor %}

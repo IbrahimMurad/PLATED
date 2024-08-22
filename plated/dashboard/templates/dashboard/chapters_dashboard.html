@@ -1,9 +1,16 @@
 {% extends "subjects/base.html" %}
 {% load static %}
-{% block title %}Chapters Dashboard{% endblock %}
+{% block title %}{{ unit.title }} Dashboard{% endblock %}
 
 {% block content %}
-<h1 class="font-weight-bold">Chapters Dashboard</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url "subjects-dashboard" %}">subjects</a></li>
+        <li class="breadcrumb-item"><a href="{% url "units-dashboard" unit.subject.id %}">{{ unit.subject.title }}</a></li>
+        <li class="breadcrumb-item">{{ unit.title }}</li>
+    </ol>
+</nav>
+<h1 class="font-weight-bold"> Unit: {{ unit.title }} Dashboard</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -16,12 +23,18 @@
                         </button>
                     </div>
                     <div id="{{chapter.title|slugify}}-plot" class="lesson-content collapse show">
+                        {% if chapter.plot_url %}
                         <div class="d-flex flex-row flex-wrap justify-content-sm-center">
                             <img src="{{ chapter.plot_url }}" alt="{{chapter.title|slugify}} Score Plot" srcset="">
                         </div>
                         <a href="{{ chapter.plot_url }}" download="{{chapter.title|slugify}}_progress.jpg" class="btn btn-primary" alt="download {{chapter.title|slugify}} score plot">
                             <i class="fa fa-download" aria-hidden="false"></i>
                         </a>
+                        {% else %}
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <p>No plot available for this chapter</p>
+                        </div>
+                        {% endif %}
                     </div>
                 </section>
                 {% endfor %}

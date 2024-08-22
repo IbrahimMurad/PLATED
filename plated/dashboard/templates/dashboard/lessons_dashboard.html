@@ -1,9 +1,17 @@
 {% extends "subjects/base.html" %}
 {% load static %}
-{% block title %}Lessons Dashboard{% endblock %}
+{% block title %}{{chapter.title}} Dashboard{% endblock %}
 
 {% block content %}
-<h1 class="font-weight-bold">Lessons Dashboard</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url "subjects-dashboard" %}">subjects</a></li>
+        <li class="breadcrumb-item"><a href="{% url "units-dashboard" chapter.unit.subject.id %}">{{ chapter.unit.subject.title }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url "chapters-dashboard" chapter.unit.id %}">{{ chapter.unit.title }}</a></li>
+        <li class="breadcrumb-item">{{ chapter.title }}</li>
+    </ol>
+</nav>
+<h1 class="font-weight-bold">{{chapter.title}} Dashboard</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -16,12 +24,18 @@
                         </button>
                     </div>
                     <div id="{{lesson.title|slugify}}-plot" class="lesson-content collapse show">
+                        {% if lesson.plot_url %}
                         <div class="d-flex flex-row flex-wrap justify-content-sm-center">
                             <img src="{{ lesson.plot_url }}" alt="{{lesson.title|slugify}} Score Plot" srcset="">
                         </div>
                         <a href="{{ lesson.plot_url }}" download="{{lesson.title|slugify}}_progress.jpg" class="btn btn-primary" alt="download {{lesson.title|slugify}} score plot">
                             <i class="fa fa-download" aria-hidden="false"></i>
                         </a>
+                        {% else %}
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <p>No plot available for this lesson</p>
+                        </div>
+                        {% endif %}
                     </div>
                 </section>
                 {% endfor %}

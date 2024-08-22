@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from subjects.models import Lesson
+from subjects.models import Subject, Unit, Chapter, Lesson
 from .utils import (
     avg_score_progress,
     score_progress,
@@ -41,37 +41,50 @@ def subject_dashboard_view(request):
             for subject in subjects_scores
         ]
     }
-    print(context)
+    if not context['subjects']:
+        context = {
+            'subjects': [
+                {
+                    'id': subject.id,
+                    'title': subject.title,
+                    'plot_url': None,
+                }
+                for subject in list(set([lesson.chapter.unit.subject for lesson in Lesson.objects.filter(grade=user.student.grade)]))
+            ]
+        }
     return render(request, 'dashboard/subjects_dashboard.html', context)
 
 
 @login_required(login_url='login')
 def unit_dashboard_view(request, id):
     user = request.user
-    units_scores = score_progress(user, 'unit', {'subject__id': id})
+    units_scores = score_progress(user, 'unit', {'chapter__unit__subject__id': id})
     context = {
+        'subject': Subject.objects.get(id=id),
         'units': [
             {
                 'id': unit['id'],
                 'title': unit['title'],
-                'plot_url': plot(f"{unit['title']}_score_progress", unit['scores'], user.id),
+                'plot_url': plot(f"{unit['title']}_score_progress", unit['scores'], user.id) if unit['scores'] else None,
             }
             for unit in units_scores
         ],
     }
+    
     return render(request, 'dashboard/units_dashboard.html', context)
 
 
 @login_required(login_url='login')
 def chapter_dashboard_view(request, id):
     user = request.user
-    chapters_scores = score_progress(user, 'chapter', {'unit__id': id})
+    chapters_scores = score_progress(user, 'chapter', {'chapter__unit__id': id})
     context = {
+        'unit': Unit.objects.get(id=id),
         'chapters': [
             {
                 'id': chapter['id'],
                 'title': chapter['title'],
-                'plot_url': plot(f"{chapter['title']}_score_progress", chapter['scores'], user.id),
+                'plot_url': plot(f"{chapter['title']}_score_progress", chapter['scores'], user.id) if chapter['scores'] else None,
             }
             for chapter in chapters_scores
         ]
@@ -84,11 +97,12 @@ def lesson_dashboard_view(request, id):
     user = request.user
     lessons_scores = score_progress(user, 'lesson', {'chapter__id': id})
     context = {
+        'chapter': Chapter.objects.get(id=id),
         'lessons': [
             {
                 'id': lesson['id'],
                 'title': lesson['title'],
-                'plot_url': plot(f"{lesson['title']}_score_progress", lesson['scores'], user.id),
+                'plot_url': plot(f"{lesson['title']}_score_progress", lesson['scores'], user.id) if lesson['scores'] else None,
             }
             for lesson in lessons_scores
         ]

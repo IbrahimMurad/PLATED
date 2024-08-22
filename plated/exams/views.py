@@ -89,7 +89,6 @@ def solved_exam(request, id):
 
 
 @login_required(login_url='login')
-@cache_page(60 * 60)
 def exam_list(request):
     print(request.build_absolute_uri().split('page=')[0])
     focus = request.GET.get('focus')

@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from exams.models import Exam
-from subjects.models import Lesson, Chapter, Unit, Subject
+from subjects.models import Lesson
+from curriculum.models import CURRENT_SEMESTER
 
 def avg(lst):
     if len(lst) == 0:
@@ -18,8 +19,11 @@ def plot(name, data, id):
     name = name.replace('_', ' ').upper()
     print(name)
     plt.figure(figsize=(12, 5))
-    plt.plot(data, '-o', color='gray', alpha=0.4, linewidth=2)
-    plt.stairs(data, linewidth=2)
+    y = [0, *data]
+    plt.plot(y, '-o', color='gray', alpha=0.4, linewidth=3, markersize=7, markerfacecolor='black')
+    for i in range(len(y)):
+        plt.annotate("{:.1f}".format(y[i]), (i, y[i]), textcoords="offset points", xytext=(0,10), ha='center')
+    plt.stairs([0, *data, 0], linewidth=3)
     plt.xlabel("Number of Exams")
     plt.ylabel("Average Score (%)")
     plt.xlim(0, len(data))
@@ -27,7 +31,10 @@ def plot(name, data, id):
     plt.xticks(range(0, len(data) + 1, 1))
     plt.yticks(range(0, 101, 10))
     plt.grid()
-    plt.title(name)
+    plt.axhspan(0, 60, color='red', alpha=0.1)
+    plt.axhspan(60, 80, color='yellow', alpha=0.1)
+    plt.axhspan(80, 100, color='green', alpha=0.1)
+    plt.title(name, fontsize=15, fontweight='bold', color='black', loc='center', pad=20)
     plt_url = f"/media/plots/{id}_{name}.jpg"
     plt.savefig(plt_url[1:], bbox_inches='tight')
     plt.close()
@@ -35,14 +42,14 @@ def plot(name, data, id):
 
 
 def score_progress(user, focus, filter):
-    model = {
-        'lesson': Lesson,
-        'chapter': Chapter,
-        'unit': Unit,
-        'subject': Subject,
+    lessons = Lesson.objects.filter(grade=user.student.grade, semester=CURRENT_SEMESTER)
+    query = {
+        'lesson': lessons.filter(**filter),
+        'chapter': list(set([lesson.chapter for lesson in lessons.filter(**filter)])),
+        'unit': list(set([lesson.chapter.unit for lesson in lessons.filter(**filter)])),
+        'subject': list(set([lesson.chapter.unit.subject for lesson in lessons])),
     }
-    focus_instances = model[focus].objects.filter(exams__student=user.student).distinct()
-    focus_instances = focus_instances.filter(**filter)
+    focus_instances = query[focus]
     focus_scores = []
     for  instance in focus_instances:
         solved_exams = instance.exams.filter(student=user.student, score__isnull=False)

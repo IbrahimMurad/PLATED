@@ -1,9 +1,15 @@
 {% extends "subjects/base.html" %}
 {% load static %}
-{% block title %}Units Dashboard{% endblock %}
+{% block title %}{{ subject.title }} Dashboard{% endblock %}
 
 {% block content %}
-<h1 class="font-weight-bold">Units Dashboard</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url "subjects-dashboard" %}">subjects</a></li>
+        <li class="breadcrumb-item">{{ subject.title }}</li>
+    </ol>
+</nav>
+<h1 class="font-weight-bold">{{ subject.title }} Dashboard</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -16,12 +22,18 @@
                         </button>
                     </div>
                     <div id="{{unit.title|slugify}}-plot" class="lesson-content collapse show">
+                        {% if unit.plot_url %}
                         <div class="d-flex flex-row flex-wrap justify-content-sm-center">
                             <img src="{{ unit.plot_url }}" alt="{{unit.title|slugify}} Score Plot" srcset="">
                         </div>
                         <a href="{{ unit.plot_url }}" download="{{unit.title|slugify}}_progress.jpg" class="btn btn-primary" alt="download {{unit.title|slugify}} score plot">
                             <i class="fa fa-download" aria-hidden="false"></i>
                         </a>
+                        {% else %}
+                        <div class="d-flex flex-row flex-wrap justify-content-sm-center">
+                            <p>No plot available for this unit</p>
+                        </div>
+                        {% endif %}
                     </div>
                 </section>
                 {% endfor %}
