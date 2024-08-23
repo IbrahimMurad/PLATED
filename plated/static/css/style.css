@@ -5,6 +5,17 @@ body {
     margin-top: 5rem;
 }
 
+h1#title-in-header {
+    font-size: 1.8em;
+    font-weight:900;
+    color: black;
+    text-align: center;
+    position: relative;
+    padding: 0;
+    margin-bottom: 3rem;
+    z-index: 1;
+}
+
 #project-name.navbar-brand {
     font-size: 1.8em;
     font-weight:900;
