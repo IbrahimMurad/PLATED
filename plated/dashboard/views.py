@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from subjects.models import Subject, Unit, Chapter, Lesson
+from curriculum.models import CURRENT_SEMESTER
 from .utils import (
     avg_score_progress,
     score_progress,
@@ -58,6 +60,17 @@ def subject_dashboard_view(request):
 @login_required(login_url='login')
 def unit_dashboard_view(request, id):
     user = request.user
+
+    if not Subject.objects.filter(id=id).exists():
+        messages.error(request, "This subject does not exist.")
+        return redirect('main-dashboard')
+
+    lessons = Lesson.objects.filter(grade=user.student.grade, semester=CURRENT_SEMESTER, chapter__unit__subject__id=id)
+    subject = list(set([lesson.chapter.unit.subject for lesson in lessons]))
+    if not subject:
+        messages.error(request, "This subject is not in your curriculum or it is not available to this semester.")
+        return redirect('main-dashboard')
+
     units_scores = score_progress(user, 'unit', {'chapter__unit__subject__id': id})
     context = {
         'subject': Subject.objects.get(id=id),
@@ -77,6 +90,18 @@ def unit_dashboard_view(request, id):
 @login_required(login_url='login')
 def chapter_dashboard_view(request, id):
     user = request.user
+
+    if not Unit.objects.filter(id=id).exists():
+        messages.error(request, "This unit does not exist.")
+        return redirect('main-dashboard')
+
+    lessons = Lesson.objects.filter(grade=user.student.grade, semester=CURRENT_SEMESTER, chapter__unit__id=id)
+    unit = list(set([lesson.chapter.unit.subject for lesson in lessons]))
+    if not unit:
+        messages.error(request, "This unit is not in your curriculum or it is not available to this semester.")
+        return redirect('main-dashboard')
+
+
     chapters_scores = score_progress(user, 'chapter', {'chapter__unit__id': id})
     context = {
         'unit': Unit.objects.get(id=id),
@@ -95,6 +120,18 @@ def chapter_dashboard_view(request, id):
 @login_required(login_url='login')
 def lesson_dashboard_view(request, id):
     user = request.user
+
+    if not Chapter.objects.filter(id=id).exists():
+        messages.error(request, "This chapter does not exist.")
+        return redirect('main-dashboard')
+
+    lessons = Lesson.objects.filter(grade=user.student.grade, semester=CURRENT_SEMESTER, chapter__id=id)
+    chapter = list(set([lesson.chapter.unit.subject for lesson in lessons]))
+    if not chapter:
+        messages.error(request, "This chapter is not in your curriculum or it is not available to this semester.")
+        return redirect('main-dashboard')
+
+
     lessons_scores = score_progress(user, 'lesson', {'chapter__id': id})
     context = {
         'chapter': Chapter.objects.get(id=id),

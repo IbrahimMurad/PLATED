@@ -16,7 +16,6 @@ from .utils import (
 )
 
 
-
 @login_required(login_url='login')
 @cache_page(60 * 60)
 def generate_exam(request):
@@ -24,6 +23,9 @@ def generate_exam(request):
     id = request.POST.get('id')
     if focus and id:
         exam = new_exam(request.user.student, focus, id)
+        if not exam:
+            messages.error(request, "No available questions for now.")
+            return redirect('exams')
         context = {'success': True, 'exam_id': exam.id}
     else:
         context = {'success': False}
@@ -34,6 +36,12 @@ def generate_exam(request):
 @cache_page(60 * 60)
 def exam(request, id):
     exam = get_object_or_404(Exam, pk=id)
+    if exam.student != request.user.student:
+        messages.error(request, "You are not allowed to view this exam.")
+        return redirect('exams')
+    if exam.solved_at:
+        messages.error(request, "This exam has already been solved.")
+        return redirect('solved-exam', id=exam.id)
     if request.method == 'POST':
         form = ExamForm(exam, request.POST)
         if form.is_valid():
@@ -69,6 +77,12 @@ def exam(request, id):
 @cache_page(60 * 60)
 def solved_exam(request, id):
     exam = Exam.objects.get(id=id)
+    if exam.student != request.user.student:
+        messages.error(request, "You are not allowed to view this exam.")
+        return redirect('exams')
+    if not exam.solved_at:
+        messages.error(request, "This exam has not been solved yet.")
+        return redirect('exams')
     context = {
         'exam': exam,
         'title': get_exam_title(exam),

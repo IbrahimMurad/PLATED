@@ -91,6 +91,8 @@ def get_options(grade, focus):
 
 def new_exam(student, focus, id):
     questions = get_exam_questions(student.grade, focus, id)
+    if not questions:
+        return None
     exam = Exam.objects.create(**exam_kwargs(student, focus, id))
     exam.questions.set(questions)
     exam.save()
