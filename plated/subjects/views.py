@@ -105,7 +105,6 @@ def lessons_view(request, id):
     return render(request, 'subjects/lessons.html', context)
 
 
-@cache_page(60 * 60)
 @login_required(login_url='login')
 def lesson_details_view(request, id):
     if not CURRENT_SEMESTER:
@@ -139,7 +138,6 @@ def tag_lesson_view(request, id):
                 lesson.tagged_students.add(student)
             else:
                 lesson.tagged_students.remove(student)
-            print(student.tagged_lessons.all())
             return JsonResponse({'success': True})
         except Lesson.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Lesson not found'})

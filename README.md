@@ -91,6 +91,7 @@ Once it is completed, the application will be deployed to a live server.
 - **[Bootstrap](https://getbootstrap.com/):** An open-source CSS framework directed at responsive, mobile-first front-end web development.
 - **[JQuery](https://jquery.com/):** A fast, small, and feature-rich JavaScript library that simplifies HTML document traversing, event handling, animating, and Ajax interactions.
 - **[Font Awesome](https://fontawesome.com/):** A font and icon toolkit based on CSS and LESS.
+- **[mathjax](https://www.mathjax.org/):** A JavaScript display engine for mathematics that works in all browsers.
 
 
 ## Roadmap
@@ -98,7 +99,7 @@ Once it is completed, the application will be deployed to a live server.
 - [x] Create the project structure and set up the Django environment.
 - [x] Implement the user authentication system.
     - [x] Create the student registration and login forms.
-    - [] Create the teacher registration and login forms.
+    - [ ] Create the teacher registration and login forms.
 - [x] Design the database schema and create the models.
     - [x] Define curriculum, grade, and semester.
     - [x] Define the subject, unit, chapter, lesson, question, and answer.

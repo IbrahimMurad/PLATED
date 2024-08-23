@@ -1,7 +1,6 @@
 <!-- curriculum.html -->
 {% extends "subjects/base.html" %}
 {% load crispy_forms_tags %}
-{% csrf_token %}
 {% block content %}
 <div class="container mt-4">
     {% if message %}
@@ -22,6 +21,7 @@
     <article class="lesson">
         <section class="lesson-title d-flex flex-row justify-content-between">
             <h1 class="">{% if lesson.number > 0 %} Lesson {{ lesson.number }} : {% endif %}{{ lesson.title }}</h1>
+            {% csrf_token %}
             <input type="hidden" id="lesson_id" value="{{ lesson.id }}"></input>
             {% if lesson in user.student.tagged_lessons.all %}
             <div class="text-secondary"><i id="bookmarkIcon" class="fas fa-bookmark bookmark fa-2x"></i></div>
