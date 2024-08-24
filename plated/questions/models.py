@@ -3,6 +3,7 @@ from subjects.models import Lesson
 
 
 class Question(models.Model):
+    """ questions table """
     body = models.TextField()
     difficulty = models.SmallIntegerField(
         choices=[
@@ -20,6 +21,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+    """ answers table """
     body = models.CharField(max_length=256)
     is_correct = models.BooleanField(default=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')

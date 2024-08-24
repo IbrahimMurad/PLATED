@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 
 
 class Curriculum(models.Model):
@@ -25,16 +24,10 @@ class Semester(models.Model):
         choices=[
             ("1", "first term"),
             ("2", "second term"),
-            ("0", "No term"),
+            ("0", "No term"),       # for grades with one term like third year of secondary school
             ])
     starting_date = models.DateField()
     ending_date = models.DateField()
 
     def __str__(self):
         return f"{self.title}"
-
-
-CURRENT_SEMESTER = Semester.objects.filter(
-    starting_date__lte=timezone.now(),
-    ending_date__gte=timezone.now()
-    ).first()

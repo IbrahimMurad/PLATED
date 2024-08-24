@@ -4,6 +4,10 @@ from questions.admin import QuestionInline
 import nested_admin
 
 
+# nest related questions with the nested answers to the lesson admin page
+# show only title, id, and chapter title in the lessons list admin page
+# also add a filter as a side bar to filter lessons by chapter
+# group some fields in advanced options and collapse by default 
 class LessonAdmin(nested_admin.NestedModelAdmin):
     inlines = [QuestionInline]
     list_display = ['title', 'id', 'chapter']
@@ -25,16 +29,19 @@ class LessonAdmin(nested_admin.NestedModelAdmin):
     ]
 
 
+# add related lessons to chapter admin page
 class LessonInline(admin.TabularInline):
     model = Lesson
     extra = 0
 
 
+# also, show only the chapter number and unit in the chapters list admin page
 class ChapterAdmin(admin.ModelAdmin):
     inlines = [LessonInline]
     list_display = ['title', 'number', 'unit']
 
 
+# add related chapters to subject admin page
 class ChapterInline(admin.TabularInline):
     model = Chapter
     extra = 0
@@ -44,6 +51,7 @@ class UnitAdmin(admin.ModelAdmin):
     inlines = [ChapterInline]
 
 
+# add related units to subject admin page
 class UnitInline(admin.TabularInline):
     model = Unit
     extra = 0

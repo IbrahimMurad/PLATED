@@ -4,16 +4,19 @@ from .models import Question, Answer
 import nested_admin
 
 
+# make answers nestable in questions
 class AnswerInline(nested_admin.NestedTabularInline):
     model = Answer
     extra = 0
 
 
+# nest answers in questions
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     list_display = ['body', 'difficulty', 'lesson']
 
 
+# nest answers in nestable questions 
 class QuestionInline(nested_admin.NestedTabularInline):
     model = Question
     inlines = [AnswerInline]

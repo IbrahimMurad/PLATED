@@ -35,6 +35,7 @@ def generate_exam(request):
 @login_required(login_url='login')
 @cache_page(60 * 60)
 def exam(request, id):
+    """ view for solving the exam """
     exam = get_object_or_404(Exam, pk=id)
     if exam.student != request.user.student:
         messages.error(request, "You are not allowed to view this exam.")
@@ -76,6 +77,7 @@ def exam(request, id):
 @login_required(login_url='login')
 @cache_page(60 * 60)
 def solved_exam(request, id):
+    """ view a soleved exam """
     exam = Exam.objects.get(id=id)
     if exam.student != request.user.student:
         messages.error(request, "You are not allowed to view this exam.")
@@ -137,6 +139,7 @@ def delete_exam(request, id):
 
 @cache_page(60 * 60)
 def get_focus_instances(request):
+    """ view to update the for input options according to the focus input sellected option """
     from curriculum.models import Grade
     focus = request.GET.get('focus')
     grade_id = request.GET.get('grade')

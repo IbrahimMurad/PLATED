@@ -5,6 +5,7 @@ from subjects.models import Lesson
 
 
 class Student(models.Model):
+    """ students table """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)

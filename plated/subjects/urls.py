@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import subjects_view, units_view, chapters_view, lessons_view, lesson_details_view, tag_lesson_view
+from .views import (
+    subjects_view,
+    units_view,
+    chapters_view,
+    lessons_view,
+    lesson_details_view,
+    tag_lesson_view
+)
 
 urlpatterns = [
     path('', subjects_view, name='subjects-list'),

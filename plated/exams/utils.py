@@ -53,6 +53,7 @@ def get_all_relevant_questions(grade, focus, id):
 
 
 def get_exam_questions(grade, focus, id):
+    """ gets random questions for the new exam """
     questions_per_exam = {
         'subject': 50,
         'unit': 40,
@@ -68,6 +69,7 @@ def get_exam_questions(grade, focus, id):
 
 
 def get_exam_title(exam):
+    """ returns a title for the exam """
     exam_by = f"{exam.student.first_name} {exam.student.last_name}"
     if exam.subject:
         exam_for = exam.subject.title
@@ -78,18 +80,20 @@ def get_exam_title(exam):
 
 
 def get_options(grade, focus):
-    from curriculum.models import CURRENT_SEMESTER
+    """ returns instance for the for input options based on focus """
+    from curriculum.context_processors import CURRENT_SEMESTER
     lessons = Lesson.objects.filter(grade=grade, semester=CURRENT_SEMESTER)
     focus_instances = {
-        'subject': list(set([lesson.chapter.unit.subject for lesson in lessons])),
-        'unit': list(set([lesson.chapter.unit for lesson in lessons])),
-        'chapter': list(set([lesson.chapter for lesson in lessons])),
+        'subject': {lesson.chapter.unit.subject for lesson in lessons.select_related('chapter__unit__subject')},
+        'unit': {lesson.chapter.unit for lesson in lessons.select_related('chapter__unit')},
+        'chapter': {lesson.chapter for lesson in lessons.select_related('chapter')},
         'lesson': lessons,
     }
     return focus_instances[focus]
 
 
 def new_exam(student, focus, id):
+    """ create and return a new exam """
     questions = get_exam_questions(student.grade, focus, id)
     if not questions:
         return None
@@ -100,6 +104,7 @@ def new_exam(student, focus, id):
 
 
 def exam_list_filter(exams, focus, on, is_solved):
+    """ apply the filter to exams list """
     focus_condition = {
         'subject': {'unit': None, 'chapter': None, 'lesson': None},
         'unit': {'subject': None, 'chapter': None, 'lesson': None},

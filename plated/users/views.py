@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.urls import views as auth_views
 from django.contrib.auth.models import User
-from curriculum.models import CURRENT_SEMESTER
 from users.forms import (
     UserRegisterForm,
     StudentRegisterForm,
@@ -39,6 +38,7 @@ def register(request):
 
 @login_required(login_url='login')
 def settings(request):
+    """ for unpdating user and student info """
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         student_form = StudentUpdateForm(request.POST, instance=request.user.student)
@@ -57,7 +57,6 @@ def settings(request):
         'student_form': student_form,
         'password_form': ChangePasswordForm(),
         'delete_form': DeleteAccountForm(),
-        'semester': CURRENT_SEMESTER,
         })
 
 
@@ -78,7 +77,6 @@ def change_passowrd(request):
         'student_form': StudentUpdateForm(instance=request.user.student),
         'password_form': password_form,
         'delete_form': DeleteAccountForm(),
-        'semester': CURRENT_SEMESTER,
         })
 
 
@@ -98,7 +96,6 @@ def delete_account(request):
         'student_form': StudentUpdateForm(instance=request.user.student),
         'password_form': ChangePasswordForm(),
         'delete_form': delete_form,
-        'semester': CURRENT_SEMESTER,
         })
 
 
