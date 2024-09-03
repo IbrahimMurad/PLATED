@@ -5,11 +5,10 @@ from .models import Student
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -21,15 +20,14 @@ class UserRegisterForm(UserCreationForm):
 class StudentRegisterForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['first_name', 'last_name', 'grade']
+        fields = ['grade']
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['first_name', 'last_name', 'username', 'email']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -41,7 +39,7 @@ class UserUpdateForm(forms.ModelForm):
 class StudentUpdateForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['first_name', 'last_name', 'grade']
+        fields = ['grade']
 
 
 class ChangePasswordForm(forms.Form):
