@@ -1,0 +1,146 @@
+[
+  {
+    "id": "87079fbb-3389-45d6-98e8-5a7e2a12753f",
+    "number": 1,
+    "title": "Physical Quantities and Measuring Units",
+    "subject_id": "0229379a-1cdf-40f7-9a9c-f580c3e0c296",
+    "cover": "unit_covers/unit-1.jpg",
+    "caption": "Begin your physics journey by mastering the essentials:\r\nDive into the world of physical quantities and the instruments that measure them, and understand the crucial differences between scalar and vector quantities."
+  },
+  {
+    "id": "3f58c37c-e5b8-4f48-b5b9-670fa63df7e7",
+    "number": 2,
+    "title": "Linear Motion",
+    "subject_id": "0229379a-1cdf-40f7-9a9c-f580c3e0c296",
+    "cover": "unit_covers/unit-2.jpg",
+    "caption": "Explore the fundamentals of linear motion:\r\nUncover the principles of motion, speed, and acceleration, and learn how forces influence the movement of objects through the powerful laws of physics."
+  },
+  {
+    "id": "27c09b78-9100-4484-a07b-737224e59740",
+    "number": 3,
+    "title": "Circular Motion",
+    "subject_id": "0229379a-1cdf-40f7-9a9c-f580c3e0c296",
+    "cover": "unit_covers/unit-3.jpg",
+    "caption": "Delve into the complexities of circular motion and gravitational forces:\r\nUnderstand the dynamics of objects in rotational paths and explore the universal force that binds the cosmos together."
+  },
+  {
+    "id": "c6e489a2-c7c3-4be9-9b11-daab07b75876",
+    "number": 4,
+    "title": "Work and Energy in our Daily Life",
+    "subject_id": "0229379a-1cdf-40f7-9a9c-f580c3e0c296",
+    "cover": "unit_covers/unit-4.png",
+    "caption": "Discover the pivotal role of work and energy in everyday life:\r\nLearn how forces cause displacement, how energy is transferred and conserved, and how these principles shape our world."
+  },
+  {
+    "id": "999f0b70-9070-4ce1-86eb-8c7f0ea483ca",
+    "number": 1,
+    "title": "Waves",
+    "subject_id": "633fdfaf-a6b7-400b-a5da-9071394d9e14",
+    "cover": "unit_covers/unit-5.jpg",
+    "caption": "Dive into the dynamic world of waves and their interactions with matter. This unit covers the basics of oscillatory and wave motion, progressing to the complex behaviors of light, such as reflection, refraction, and diffraction. Key lessons include the exploration of light's properties and the principles behind wave phenomena, essential for understanding everything from simple vibrations to advanced optical systems."
+  },
+  {
+    "id": "41750340-8f15-4146-9ea4-869084cb6e17",
+    "number": 2,
+    "title": "Fluid Mechanics",
+    "subject_id": "633fdfaf-a6b7-400b-a5da-9071394d9e14",
+    "cover": "unit_covers/unit-6.jpg",
+    "caption": "This unit delves into the behavior of fluids both at rest and in motion. Students will explore hydrostatics, learning about pressure, density, and the principles governing fluid equilibrium. The unit progresses to hydrodynamics, where the focus shifts to fluid flow, viscosity, and the applications of these principles in real-world systems."
+  },
+  {
+    "id": "238dd724-06e6-4fc7-b746-8f6eec736f4b",
+    "number": 3,
+    "title": "Heat",
+    "subject_id": "633fdfaf-a6b7-400b-a5da-9071394d9e14",
+    "cover": "unit_covers/unit-7.jpg",
+    "caption": "Explore the principles of thermodynamics through the study of gas laws. This unit covers the foundational relationships between pressure, volume, and temperature, crucial for understanding the behavior of gases in various conditions. Students will learn about key concepts such as Boyle's Law, Charles' Law, and the General Gas Law, which together provide a complete picture of gas dynamics and thermal interactions."
+  },
+  {
+    "id": "81f0c968-f8a1-4fe4-96bf-5c35469f5a83",
+    "number": 1,
+    "title": "Dynamic Electricity and Electromagnetism",
+    "subject_id": "a88a0b52-4c35-4b7f-be31-1b878b78ec54",
+    "cover": "unit_covers/unit-8.jpeg",
+    "caption": "Dive into the world of electric currents, Ohm's Law, and complex circuit analysis with Kirchhoff's Laws. Explore the fascinating magnetic effects of electric currents, and learn about key instruments like the dynamo, electric motor, and transformer. This unit will also cover the fundamental principles of electromagnetic induction and alternating current circuits."
+  },
+  {
+    "id": "25dfb1f2-613f-4cc8-a81d-4c675986f258",
+    "number": 2,
+    "title": "Introduction to Modern Physics",
+    "subject_id": "a88a0b52-4c35-4b7f-be31-1b878b78ec54",
+    "cover": "unit_covers/unit-9.jpeg",
+    "caption": "Transition into the quantum realm with topics like wave-particle duality, photoelectric effects, and the intriguing behavior of light and matter at the atomic scale. Understand the applications of these phenomena in modern technologies, such as lasers and electron microscopes. This unit also covers the principles behind semiconductors, transistors, and the basics of digital and analog electronics, paving the way for future studies in advanced electronics and quantum mechanics."
+  },
+  {
+    "id": "cabdc4bf-2d66-412e-92b9-2c8b954eb619",
+    "number": 1,
+    "title": "\u0627\u0644\u0643\u0645\u064a\u0627\u062a \u0627\u0644\u0641\u064a\u0632\u064a\u0627\u0626\u064a\u0629 \u0648\u0648\u062d\u062f\u0627\u062a \u0627\u0644\u0642\u064a\u0627\u0633",
+    "subject_id": "a0c23e00-17ea-4c2b-a85f-cca67ab03856",
+    "cover": "unit_covers/unit-10.jpg",
+    "caption": ""
+  },
+  {
+    "id": "5859c1ef-1ec8-482f-aec2-0c8a6d52458f",
+    "number": 2,
+    "title": "\u0627\u0644\u062d\u0631\u0643\u0629 \u0627\u0644\u062e\u0637\u064a\u0629",
+    "subject_id": "a0c23e00-17ea-4c2b-a85f-cca67ab03856",
+    "cover": "unit_covers/unit-11.jpg",
+    "caption": ""
+  },
+  {
+    "id": "de2f46f7-2bef-46d1-ada2-71d99bcd159c",
+    "number": 3,
+    "title": "\u0627\u0644\u062d\u0631\u0643\u0629 \u0627\u0644\u062f\u0627\u0626\u0631\u064a\u0629",
+    "subject_id": "a0c23e00-17ea-4c2b-a85f-cca67ab03856",
+    "cover": "unit_covers/unit-12.jpg",
+    "caption": ""
+  },
+  {
+    "id": "464e09ec-4202-46a4-9f20-4ea314abc68a",
+    "number": 4,
+    "title": "\u0627\u0644\u0634\u063a\u0644 \u0648\u0627\u0644\u0637\u0627\u0642\u0629 \u0641\u064a \u062d\u064a\u0627\u062a\u0646\u0627 \u0627\u0644\u064a\u0648\u0645\u064a\u0629",
+    "subject_id": "a0c23e00-17ea-4c2b-a85f-cca67ab03856",
+    "cover": "unit_covers/unit-13.png",
+    "caption": ""
+  },
+  {
+    "id": "f868ca04-15a6-4b42-a9d0-7ad984a66e41",
+    "number": 1,
+    "title": "\u0627\u0644\u0645\u0648\u062c\u0627\u062a",
+    "subject_id": "6d41dd01-d6f3-4264-a192-77079ef9029a",
+    "cover": "unit_covers/unit-14.jpg",
+    "caption": ""
+  },
+  {
+    "id": "4313aad9-0e77-4963-adaf-85cf52541abf",
+    "number": 2,
+    "title": "\u062e\u0648\u0627\u0635 \u0627\u0644\u0645\u0648\u0627\u0626\u0639",
+    "subject_id": "6d41dd01-d6f3-4264-a192-77079ef9029a",
+    "cover": "unit_covers/unit-15.jpg",
+    "caption": ""
+  },
+  {
+    "id": "3adc26d6-9b3e-4848-97e6-fd96ff844cc4",
+    "number": 3,
+    "title": "\u0627\u0644\u062d\u0631\u0627\u0631\u0629",
+    "subject_id": "6d41dd01-d6f3-4264-a192-77079ef9029a",
+    "cover": "unit_covers/unit-16.jpg",
+    "caption": ""
+  },
+  {
+    "id": "b233c27f-6ef6-4398-b0a1-1d404f905b24",
+    "number": 1,
+    "title": "\u0627\u0644\u0643\u0647\u0631\u0628\u064a\u0629 \u0627\u0644\u062a\u064a\u0627\u0631\u064a\u0629 \u0648\u0627\u0644\u0643\u0647\u0631\u0648\u0645\u063a\u0646\u0627\u0637\u064a\u0633\u064a\u0629",
+    "subject_id": "625550db-3458-4070-bb0d-b7df997798c9",
+    "cover": "unit_covers/unit-17.jpeg",
+    "caption": ""
+  },
+  {
+    "id": "79ccbf4f-c4e6-4805-881c-c5d81a70856f",
+    "number": 2,
+    "title": "\u0645\u0642\u062f\u0645\u0629 \u0641\u064a \u0627\u0644\u0641\u064a\u0632\u064a\u0627\u0621 \u0627\u0644\u062d\u062f\u064a\u062b\u0629",
+    "subject_id": "625550db-3458-4070-bb0d-b7df997798c9",
+    "cover": "unit_covers/unit-18.jpeg",
+    "caption": ""
+  }
+]
