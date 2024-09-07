@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Subject, Unit, Chapter, Lesson
-# from curriculum.context_processors import CURRENT_SEMESTER
+from curriculum.context_processors import CURRENT_SEMESTER
 from django.contrib.auth.decorators import login_required
 from exams.forms import GenerateExamForm
 from subjects.utils import (
@@ -19,11 +19,11 @@ def subjects_view(request):
     """ lists all the related subjects """
 
     # if there is no running semester, show a message
-    # if not CURRENT_SEMESTER:
-    #     return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
+    if not CURRENT_SEMESTER:
+        return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
 
     # get all lessons for the student's grade in the running semester
-    lessons = Lesson.objects.filter(grade=request.user.student.grade).select_related('chapter__unit__subject')      # semester=CURRENT_SEMESTER
+    lessons = Lesson.objects.filter(grade=request.user.student.grade, semester=CURRENT_SEMESTER).select_related('chapter__unit__subject')
 
     # query subjects from lessons
     subjects = {lesson.chapter.unit.subject for lesson in lessons}
@@ -42,12 +42,12 @@ def units_view(request, id):
     """ lists all the related units of the subject with id=id """
 
     # if there is no running semester, show a message
-    # if not CURRENT_SEMESTER:
-    #     return render(request, 'subjects/units.html', {'message': 'There is no running semester right now.'})
+    if not CURRENT_SEMESTER:
+        return render(request, 'subjects/units.html', {'message': 'There is no running semester right now.'})
 
     # get the subject with id=id and query only the related units
     subject = get_object_or_404(Subject, pk=id)
-    units = get_relevant_subject_units(id, request.user.student.grade)      # , CURRENT_SEMESTER
+    units = get_relevant_subject_units(id, request.user.student.grade, CURRENT_SEMESTER)
 
     # if there are no related units in this subject, show a message
     if not units:
@@ -71,11 +71,11 @@ def units_view(request, id):
 @login_required(login_url='login')
 def chapters_view(request, id):
     """ lists all the related chapters of the unit with id=id """
-    # if not CURRENT_SEMESTER:
-    #     return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
+    if not CURRENT_SEMESTER:
+        return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
 
     unit = get_object_or_404(Unit, pk=id)
-    chapters = get_relevant_unit_chapters(id, request.user.student.grade)       # , CURRENT_SEMESTER
+    chapters = get_relevant_unit_chapters(id, request.user.student.grade, CURRENT_SEMESTER)
 
     # if there are no related chapters in this unit, show a message
     if not chapters:
@@ -99,11 +99,11 @@ def chapters_view(request, id):
 @login_required(login_url='login')
 def lessons_view(request, id):
     """ lists all the related lessons of the chapter with id=id """
-    # if not CURRENT_SEMESTER:
-    #     return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
+    if not CURRENT_SEMESTER:
+        return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
 
     chapter = get_object_or_404(Chapter, pk=id)
-    lessons = get_relevant_chapter_lessons(id, request.user.student.grade)      # , CURRENT_SEMESTER
+    lessons = get_relevant_chapter_lessons(id, request.user.student.grade, CURRENT_SEMESTER)
 
     # if there are no related lessons in this chapter, show a message
     if not lessons:
@@ -129,16 +129,16 @@ def lesson_details_view(request, id):
     """ show the details of a lesson """
 
     # if there is no running semester, show a message
-    # if not CURRENT_SEMESTER:
-    #     return render(request, 'subjects/lesson_details.html', {'message': 'There is no running semester right now.'})
+    if not CURRENT_SEMESTER:
+        return render(request, 'subjects/lesson_details.html', {'message': 'There is no running semester right now.'})
 
     lesson = get_object_or_404(Lesson, pk=id)
 
     # if the lesson is not related, show a message
-    # if lesson.grade != request.user.student.grade or lesson.semester != CURRENT_SEMESTER:
-    #     return render(request, 'subjects/lesson_details.html', {
-    #         'message': 'This lesson is not available for your grade or the running smester.',
-    #         })
+    if lesson.grade != request.user.student.grade or lesson.semester != CURRENT_SEMESTER:
+        return render(request, 'subjects/lesson_details.html', {
+            'message': 'This lesson is not available for your grade or the running smester.',
+            })
 
     # create a form to generate exams (for the generate exam button)
     exam_form = GenerateExamForm(initial={'focus': 'lesson', 'id': lesson.id})

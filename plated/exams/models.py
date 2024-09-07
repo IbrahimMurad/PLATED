@@ -66,6 +66,9 @@ class Exam(BaseModel):
     def __str__(self):
         return f"Exam on {self.subject or self.unit or self.chapter or self.lesson}"
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class StudentAnswer(models.Model):
     """ student_answers table """
@@ -74,7 +77,7 @@ class StudentAnswer(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     
     class Meta:
-        """ adds a unique combination of student, exam, and answer constraint """
+        # adds a unique combination of student, exam, and answer constraint
         unique_together = ('student', 'exam', 'answer')
 
     def __str__(self):

@@ -4,3 +4,4 @@ crispy-bootstrap4
 pillow
 djaango-nested-admin
 matplotlib
+django-environ

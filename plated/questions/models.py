@@ -25,10 +25,13 @@ class Question(BaseModel):
     def __str__(self):
         return self.body[:50]
 
+    class Meta:
+        ordering = "?"
+
 
 class Answer(BaseModel):
     """ answers table """
-    body = models.CharField(max_length=256)
+    body = models.CharField(max_length=256, null=True, blank=True)
     graph = models.ImageField(upload_to='answers_graphs/', null=True, blank=True)
     is_correct = models.BooleanField(default=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')

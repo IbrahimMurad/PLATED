@@ -12,19 +12,19 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+env = environ.Env()
+env.read_env(str(BASE_DIR / ".env"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+9$l-p$gxfk%g)6yijy_g@4($2jf%^a^kiw7o%goxtez3!40ak'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -32,20 +32,23 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Project apps
     'core.apps.CoreConfig',
-    'curriculum',
+    'curriculum.apps.CurriculumConfig',
     'subjects.apps.SubjectsConfig',
     'questions.apps.QuestionsConfig',
     'users.apps.UsersConfig',
     'exams.apps.ExamsConfig',
     'home.apps.HomeConfig',
     'dashboard.apps.DashboardConfig',
+    # Third party apps
     'nested_admin',
     'crispy_forms',
     'crispy_bootstrap4',
@@ -88,12 +91,12 @@ WSGI_APPLICATION = 'plated.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "plated",
-        "USER": "ibrahim_morad",
-        "PASSWORD": "DevPassPlated",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "ENGINE": env("DB_ENGINE"),
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
@@ -122,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Africa/Cairo'
+TIME_ZONE = env("TIME_ZONE")
 
 USE_I18N = True
 
@@ -151,9 +154,9 @@ LOGIN_REDIRECT_URL = 'home'
 
 
 # Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
