@@ -6,7 +6,7 @@ it also resizes the cover to save memory and reduce the sending time to client.
 from core.models import BaseModel
 import os
 from django.db import models
-from subjects.utils import resize_image
+from subjects.utils import resize_image, get_upload_path
 
 
 class MaterialBaseModel(BaseModel):
@@ -14,24 +14,24 @@ class MaterialBaseModel(BaseModel):
     title = models.CharField(max_length=128)
 
     cover = models.ImageField(
-        "a catching cover image visualizing the content of the %(class)s",
+        "cover image",
         default='default.jpg',
-        upload_to='covers/%(class)s/'   # file name : id.jpg (changes before saving in save method)
-        )
+        upload_to=get_upload_path   # file name : id.jpg (changes before saving in save method)
+    )
 
     # a caption for the card dispaly
     caption = models.TextField(null=True, blank=True)
 
     order_in_syllabus = models.SmallIntegerField(
-        "the order of the %(class)s in the syllabus (the default ordering)",
+        "order of in syllabus",
         default=1
-        )
+    )
 
     # its default is 0 indicating that this this the only one (the only lesson in the chapter)
     number = models.SmallIntegerField(
-        "the odered of the %(class)s in its parent",
+        "order in parent",
         default=0,
-        )
+    )
 
     def __str__(self):
         return f"{self.title}"

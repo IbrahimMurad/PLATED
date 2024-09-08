@@ -34,5 +34,4 @@ class Lesson(MaterialBaseModel):
     required_by = models.JSONField(null=True, blank=True)
 
     # relevant to
-    grade = models.ForeignKey(Grade, related_name='lessons', on_delete=models.CASCADE, default=1)
     semester = models.ForeignKey(Semester, null=True, related_name='lessons', on_delete=models.CASCADE)

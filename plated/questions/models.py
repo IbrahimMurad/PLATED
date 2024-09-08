@@ -26,7 +26,7 @@ class Question(BaseModel):
         return self.body[:50]
 
     class Meta:
-        ordering = "?"
+        ordering = ["?"]
 
 
 class Answer(BaseModel):
