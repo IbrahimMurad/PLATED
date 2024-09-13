@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Project apps
     'core.apps.CoreConfig',
+    'auth.apps.AuthConfig',
     'curriculum.apps.CurriculumConfig',
     'subjects.apps.SubjectsConfig',
     'questions.apps.QuestionsConfig',
