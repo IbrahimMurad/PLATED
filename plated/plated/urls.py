@@ -11,7 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('subject/', include('subjects.urls')),
     path('user/', include('users.urls')),
-    path('auth/', include('auth.urls')),
+    path('auth/', include('myAuth.urls')),
     path('exam/', include('exams.urls')),
     path('dashboard/', include('dashboard.urls')),
     path(r'^_nested_admin/', include('nested_admin.urls')),

@@ -22,16 +22,8 @@ def subjects_view(request):
     if not CURRENT_SEMESTER:
         return render(request, 'subjects/chapters.html', {'message': 'There is no running semester right now.'})
 
-    # get all lessons for the student's grade in the running semester
-    lessons = Lesson.objects.filter(grade=request.user.student.grade, semester=CURRENT_SEMESTER).select_related('chapter__unit__subject')
-
-    # query subjects from lessons
-    subjects = {lesson.chapter.unit.subject for lesson in lessons}
-    for subject in subjects:
-        print(subject)
-
     return render(request, 'subjects/subjects.html', {
-        'subjects': subjects,
+        'subjects': Subject.objects.filter(grade=request.user.student.grade),
         'title': 'subjects',
         })
 

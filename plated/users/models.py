@@ -1,3 +1,4 @@
+from django.urls import reverse
 from core.models import BaseModel
 from django.db import models
 from django.contrib.auth.models import User
@@ -21,3 +22,6 @@ class Student(BaseModel):
 
     def __str__(self):
         return f"Student: {self.first_name} {self.last_name}"
+    
+    def get_absolute_url(self):
+        return reverse("home")

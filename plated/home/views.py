@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from exams.models import Exam
 from dashboard.utils import avg
 
@@ -8,6 +9,9 @@ from dashboard.utils import avg
 def home(request):
     """ home view """
 
+    if not request.user.student:
+        messages.error("This user has no students.")
+        redirect('login')
     student = request.user.student
     all_exams = Exam.objects.filter(student=student)
 

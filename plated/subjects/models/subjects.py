@@ -1,6 +1,7 @@
 """ Subject model
 """
 
+from django.urls import reverse
 from subjects.models.base import MaterialBaseModel
 from django.db import models
 from curriculum.models import Grade
@@ -20,3 +21,6 @@ class Subject(MaterialBaseModel):
     
     class Meta:
         ordering = ['title']
+
+    def get_absolute_url(self):
+        return reverse("units-list", kwargs={"pk": self.pk})

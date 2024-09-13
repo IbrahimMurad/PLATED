@@ -11,7 +11,7 @@ from .views import (
 urlpatterns = [
     path('', main_dashboard_view, name='main-dashboard'),
     path('subject/', subject_dashboard_view, name='subjects-dashboard'),
-    path('subject/<int:id>/units/', unit_dashboard_view, name='units-dashboard'),
-    path('unit/<int:id>/chapters/', chapter_dashboard_view, name='chapters-dashboard'),
-    path('chapter/<int:id>/lessons/', lesson_dashboard_view, name='lessons-dashboard'),
+    path('subject/<uuid:id>/units/', unit_dashboard_view, name='units-dashboard'),
+    path('unit/<uuid:id>/chapters/', chapter_dashboard_view, name='chapters-dashboard'),
+    path('chapter/<uuid:id>/lessons/', lesson_dashboard_view, name='lessons-dashboard'),
 ]

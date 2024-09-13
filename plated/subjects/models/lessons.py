@@ -2,6 +2,7 @@
 """
 
 from django.db import models
+from django.urls import reverse
 from subjects.models.base import MaterialBaseModel
 from .chapters import Chapter
 from curriculum.models import Grade, Semester
@@ -35,3 +36,6 @@ class Lesson(MaterialBaseModel):
 
     # relevant to
     semester = models.ForeignKey(Semester, null=True, related_name='lessons', on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse("lesson-details", kwargs={"pk": self.pk})
