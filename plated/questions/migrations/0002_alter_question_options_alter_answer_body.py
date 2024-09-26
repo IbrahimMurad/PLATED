@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('questions', '0001_initial'),
+        ("questions", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='question',
-            options={'ordering': ['?']},
+            name="question",
+            options={"ordering": ["?"]},
         ),
         migrations.AlterField(
-            model_name='answer',
-            name='body',
+            model_name="answer",
+            name="body",
             field=models.CharField(blank=True, max_length=256, null=True),
         ),
     ]

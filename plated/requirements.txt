@@ -2,6 +2,6 @@ django
 django-crispy-forms
 crispy-bootstrap4
 pillow
-djaango-nested-admin
+django-nested-admin
 matplotlib
 django-environ

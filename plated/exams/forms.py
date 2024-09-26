@@ -7,11 +7,11 @@ class GenerateExamForm(forms.Form):
 
 
 class ExamForm(forms.Form):
-    def __init__(self, exam=None, *args, **kwargs): 
+    def __init__(self, exam=None, *args, **kwargs):
         super(ExamForm, self).__init__(*args, **kwargs)
         q_number = 1
         for question in exam.questions.all():
-            self.fields['question_%s' % question.id] = forms.ChoiceField(
+            self.fields["question_%s" % question.id] = forms.ChoiceField(
                 choices=[(answer.id, answer.body) for answer in question.answers.all()],
                 widget=forms.RadioSelect,
                 label=f"{q_number} ) {question.body}",
@@ -28,5 +28,8 @@ class NewExamForm(forms.Form):
             ("unit", "unit"),
             ("chapter", "chapter"),
             ("lesson", "lesson"),
-            ], required=True, label="Focus")
+        ],
+        required=True,
+        label="Focus",
+    )
     id = forms.ChoiceField(choices=(), required=True, disabled=True, label="Select")

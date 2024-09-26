@@ -1,29 +1,35 @@
-from django.contrib import admin
-from .models import Subject, Unit, Chapter, Lesson
-from questions.admin import QuestionInline
 import nested_admin
+from django.contrib import admin
+
+from questions.admin import QuestionInline
+from subjects.models import Chapter, Lesson, Subject, Unit
 
 
 # nest related questions with the nested answers to the lesson admin page
 # show only title, id, and chapter title in the lessons list admin page
 # also add a filter as a side bar to filter lessons by chapter
-# group some fields in advanced options and collapse by default 
+# group some fields in advanced options and collapse by default
 class LessonAdmin(nested_admin.NestedModelAdmin):
     inlines = [QuestionInline]
-    list_display = ['title', 'id', 'chapter']
-    list_filter = ['chapter']
+    list_display = ["title", "id", "chapter"]
+    list_filter = ["chapter"]
     fieldsets = [
+        (None, {"fields": ["title", "chapter", "grade", "semester"]}),
         (
-            None,
+            "Advanced options",
             {
-                'fields': ['title', 'chapter', 'grade', 'semester']
-            }
-        ),
-        (
-            'Advanced options',
-            {
-                'classes': ['collapse'],
-                'fields': ['number', 'caption', 'cover', 'intro', 'goals', 'details', 'notes', 'required_by', 'requires'],
+                "classes": ["collapse"],
+                "fields": [
+                    "number",
+                    "caption",
+                    "cover",
+                    "intro",
+                    "goals",
+                    "details",
+                    "notes",
+                    "required_by",
+                    "requires",
+                ],
             },
         ),
     ]
@@ -38,7 +44,7 @@ class LessonInline(admin.TabularInline):
 # also, show only the chapter number and unit in the chapters list admin page
 class ChapterAdmin(admin.ModelAdmin):
     inlines = [LessonInline]
-    list_display = ['title', 'number', 'unit']
+    list_display = ["title", "number", "unit"]
 
 
 # add related chapters to subject admin page

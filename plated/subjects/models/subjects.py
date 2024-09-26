@@ -8,19 +8,26 @@ from curriculum.models import Grade
 
 
 class Subject(MaterialBaseModel):
-    """ subjects table """
+    """subjects table"""
+
     grade = models.ForeignKey(
         Grade,
         on_delete=models.CASCADE,
-        related_name='subjects',
-        related_query_name='subject',
-        default=Grade.objects.first().id
-        )
+        related_name="subjects",
+        related_query_name="subject",
+        default=Grade.objects.first().id,
+    )
     order_in_syllabus = None
     number = None
-    
+
     class Meta:
-        ordering = ['title']
+        ordering = ["title"]
 
     def get_absolute_url(self):
         return reverse("units-list", kwargs={"pk": self.pk})
+
+    @property
+    def questions(self):
+        from questions.models import Question
+
+        return Question.objects.filter(lesson__chapter__unit__subject=self)

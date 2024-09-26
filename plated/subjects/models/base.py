@@ -10,22 +10,20 @@ from subjects.utils import resize_image, get_upload_path
 
 
 class MaterialBaseModel(BaseModel):
-    """ an abstract base model for Subject, Unit, Chapter, and Lesson models """
+    """an abstract base model for Subject, Unit, Chapter, and Lesson models"""
+
     title = models.CharField(max_length=128)
 
     cover = models.ImageField(
         "cover image",
-        default='default.jpg',
-        upload_to=get_upload_path   # file name : id.jpg (changes before saving in save method)
+        default="default.jpg",
+        upload_to=get_upload_path,  # file name : id.jpg (changes before saving in save method)
     )
 
     # a caption for the card dispaly
     caption = models.TextField(null=True, blank=True)
 
-    order_in_syllabus = models.SmallIntegerField(
-        "order of in syllabus",
-        default=1
-    )
+    order_in_syllabus = models.SmallIntegerField("order of in syllabus", default=1)
 
     # its default is 0 indicating that this this the only one (the only lesson in the chapter)
     number = models.SmallIntegerField(
@@ -37,7 +35,7 @@ class MaterialBaseModel(BaseModel):
         return f"{self.title}"
 
     def save(self, *args, **kwargs):
-        """ changes the name of the cover and remove older one before saving """
+        """changes the name of the cover and remove older one before saving"""
         if self.cover:
             root, ext = os.path.splitext(self.cover.name)
             new_img_name = f"{self.pk}{ext}"
@@ -60,4 +58,4 @@ class MaterialBaseModel(BaseModel):
 
     class Meta:
         abstract = True
-        ordering = ['order_in_syllabus']
+        ordering = ["order_in_syllabus"]
