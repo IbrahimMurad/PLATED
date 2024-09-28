@@ -1,7 +1,7 @@
 # Project configuration file for plated
 
-
 [project]
+
 
 name = "plated"
 description = "An educational platform web application."
@@ -11,6 +11,7 @@ version = "0.6.0"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
+dependencies = ["django>=5.0", "django-rest-framework", "django-environ"]
 keywords = [
   "python",
   "education",
@@ -27,8 +28,6 @@ keywords = [
   "backend",
   "frontend",
 ]
-dependencies = ["django>=5.0", "django-rest-framework", "django-environ"]
-
 
 [project.optional-dependencies]
 
@@ -40,64 +39,16 @@ dev = ["unittest", "black", "isort", "flake8"]
 homepage = "https://github.com/IbrahimMurad/PLATED"
 repository = "https://github.com/IbrahimMurad/PLATED"
 
-[project.scripts]
-
-test = "pytest"
-format = "black . && isort ."
-lint = "flake8"
-server = "python3 manage.py runserver"
-makemigrations = "python3 manage.py makemigrations"
-migrate = "python3 manage.py migrate"
-createsuperuser = "python3 manage.py createsuperuser"
-shell = "python3 manage.py shell"
-collectstatic = "python3 manage.py collectstatic"
-startapp = "python3 manage.py startapp"
-
 
 [tool.black]
 
+exclude = '/(\.git|\.mypy_cache|\.pytest_cache|\.vscode|\.venv|__pycache__)/'
 line-length = 88
 target-version = ['py38', 'py39', 'py310']
-exclude = '''
-/(
-  \.git
-  | \.mypy_cache
-  | \.pytest_cache
-  | \.vscode
-  | \.venv
-  | __pycache__
-)/
-'''
 
 
 [tool.isort]
 
 profile = 'black'
 line_length = 88
-skip = '''
-/(
-  \.git
-  | \.mypy_cache
-  | \.pytest_cache
-  | \.vscode
-  | \.venv
-  | __pycache__
-)/
-'''
-
-
-[tool.flake8]
-
-per_file_ignores = ['__init__.py:F401']
-max-line-length = 88
-max-complexity = 18
-exclude = '''
-/(
-  \.git
-  | \.mypy_cache
-  | \.pytest_cache
-  | \.vscode
-  | \.venv
-  | __pycache__
-)/
-'''
+skip = '/(\.git|\.mypy_cache|\.pytest_cache|\.vscode|\.venv|__pycache__)/'
