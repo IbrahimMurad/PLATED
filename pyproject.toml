@@ -1,0 +1,103 @@
+# Project configuration file for plated
+
+
+[project]
+
+name = "plated"
+description = "An educational platform web application."
+authors = [{ name = "Ibrahim Morad", email = "ibrahimmorad31@gmail.com" }]
+maintainers = [{ name = "Ibrahim Morad", email = "ibrahimmorad31@gmail.com" }]
+version = "0.6.0"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+keywords = [
+  "python",
+  "education",
+  "educational",
+  "secondary school",
+  "django",
+  "django project",
+  "rest api",
+  "rest framework",
+  "react",
+  "big project",
+  "web application",
+  "full stack",
+  "backend",
+  "frontend",
+]
+dependencies = ["django>=5.0", "django-rest-framework", "django-environ"]
+
+
+[project.optional-dependencies]
+
+dev = ["unittest", "black", "isort", "flake8"]
+
+
+[project.urls]
+
+homepage = "https://github.com/IbrahimMurad/PLATED"
+repository = "https://github.com/IbrahimMurad/PLATED"
+
+[project.scripts]
+
+test = "pytest"
+format = "black . && isort ."
+lint = "flake8"
+server = "python3 manage.py runserver"
+makemigrations = "python3 manage.py makemigrations"
+migrate = "python3 manage.py migrate"
+createsuperuser = "python3 manage.py createsuperuser"
+shell = "python3 manage.py shell"
+collectstatic = "python3 manage.py collectstatic"
+startapp = "python3 manage.py startapp"
+
+
+[tool.black]
+
+line-length = 88
+target-version = ['py38', 'py39', 'py310']
+exclude = '''
+/(
+  \.git
+  | \.mypy_cache
+  | \.pytest_cache
+  | \.vscode
+  | \.venv
+  | __pycache__
+)/
+'''
+
+
+[tool.isort]
+
+profile = 'black'
+line_length = 88
+skip = '''
+/(
+  \.git
+  | \.mypy_cache
+  | \.pytest_cache
+  | \.vscode
+  | \.venv
+  | __pycache__
+)/
+'''
+
+
+[tool.flake8]
+
+per_file_ignores = ['__init__.py:F401']
+max-line-length = 88
+max-complexity = 18
+exclude = '''
+/(
+  \.git
+  | \.mypy_cache
+  | \.pytest_cache
+  | \.vscode
+  | \.venv
+  | __pycache__
+)/
+'''
