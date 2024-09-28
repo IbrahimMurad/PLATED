@@ -186,3 +186,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 - Ibrahim Murad - [ibrahimmorad31@gmail.com](mailto:ibrahimmorad31@gmail.com)
+
+## Support
+
+Give a ⭐️ if you like this project!
+
+
+## release notes
+
+-  v0.5.0-alpha: Initial release of the project. It was a graduation project for ALX-SE program.
+It will be debrecated soon and a new version will be released with more features and better design.
+The new vesion aims to have separete back-end and front-end, and to be deployed to a live server.
+The back-end will be a new django project with more models and features, and it will serve as a RESTfull API server using django-rest-framework.
+The front-end will be a react project.
+
+- v0.6.0-alpha: comming...
