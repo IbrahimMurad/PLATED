@@ -1,0 +1,259 @@
+Table users {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  username varchar [not null]
+  first_name varchar [null]
+  last_name varchar [null]
+  email varchar [unique, not null]
+  password varchar [not null]
+}
+
+Table curricula {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  name varchar [not null]
+  type curriculum_type [not null]
+}
+
+enum curriculum_type {
+  National
+  International
+}
+
+Table path {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  name varchar [not null]
+  main_language language [not null]
+  curriculum_id uuid [not null]
+}
+
+enum language {
+  Arabic
+  English
+}
+
+Table stage {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  name varchar [not null]
+  path_id uuid [not null]
+}
+
+Table grade {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  number smallint [not null]
+  name varchar [not null]
+  stage_id uuid [not null]
+}
+
+Table semester {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  name semester_name [not null]
+  starting_date date [not null]
+  ending_date date [not null]
+}
+
+enum semester_name {
+  "First term"
+  "Second term"
+  "No term - Full year"
+  "Summer school"
+}
+
+Table subject {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  name varchar [not null]
+}
+
+Table textbook {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  title semester_name [not null]
+  cover varchar [note: 'a cover iamge']
+  caption text
+  subject_id uuid [not null]
+  grade_id uuid [not null]
+}
+
+Table unit {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  title semester_name [not null]
+  cover varchar [note: 'a cover iamge']
+  caption text
+  textbook_id uuid [not null]
+}
+
+Table chapter {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  title semester_name [not null]
+  cover varchar [note: 'a cover iamge']
+  caption text
+  unit_id uuid [not null]
+}
+
+Table lesson {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  title semester_name [not null]
+  cover varchar [note: 'a cover iamge']
+  caption text
+  chapter_id uuid [not null]
+  semester_id uuid
+  intro text
+  goals text
+  requirs uuid
+  details text
+  session_vid varchar
+}
+
+Table student {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  user_id uuid [not null]
+  grade_id uuid [not null]
+  favorite_lessons uuid
+}
+
+Table teacher {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  user_id uuid [not null]
+  subject_id uuid [not null]
+}
+
+Table question {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  body text [not null]
+  difficulty difficulty_level
+  lesson_id uuid [not null]
+  solution text [default: null]
+}
+
+Table choices {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  body text [not null]
+  question_id uuid [not null]
+  is_correct bool [default: false]
+}
+
+
+Table exam {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`, not null]
+  updated_at timestamp [default: `now()`, not null]
+  created_by uuid [not null]
+  student_id uuid [not null]
+  scope_type scope_type [not null]
+  scope_id uuid [not null]
+  score smallint [default: null]
+  duration bigint [default: `interval '1800 seconds'`]
+  difficulty difficulty_level
+  start_time timestamp [default: null]
+  questions uuid
+}
+
+enum scope_type {
+  "Textbook"
+  "Unit"
+  "Chapter"
+  "Lesson"
+}
+
+enum difficulty_level {
+  "easy"
+  "middium"
+  "hard"
+  "very hard"
+}
+
+Table student_answer {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`]
+  update_at timestamp [default: `now()`]
+  student_id uuid [not null]
+  answer_id uuid [not null]
+  exam_id uuid [not null]
+}
+
+Table class {
+  id uuid [primary key]
+  created_at timestamp [default: `now()`]
+  update_at timestamp [default: `now()`]
+  teacher_id uuid [not null]
+  room varchar [null]
+  schedual datetime [null]
+  students uuid
+}
+
+ref: path.curriculum_id > curricula.id
+
+ref: stage.path_id > path.id
+
+ref: grade.stage_id > stage.id
+
+ref: textbook.subject_id > subject.id
+
+ref: textbook.grade_id > grade.id
+
+ref: unit.textbook_id > textbook.id
+
+ref: chapter.unit_id > unit.id
+
+ref: lesson.chapter_id > chapter.id
+
+ref: lesson.requirs <> lesson.id
+
+ref: lesson.semester_id > semester.id
+
+ref: student.user_id - users.id
+
+ref: student.grade_id > grade.id
+
+ref: teacher.user_id - users.id
+
+ref: teacher.subject_id > subject.id
+
+ref: question.lesson_id > lesson.id
+
+ref: exam.created_by > users.id
+
+ref: exam.student_id > student.id
+
+ref: class.teacher_id > teacher.id
+
+ref: class.students <> student.id
+
+ref: choices.question_id > question.id
+
+ref: exam.questions <> question.id
+
+ref: student_answer.answer_id > choices.id
+
+ref: student_answer.exam_id > exam.id
+
+ref: student_answer.student_id > student.id
+
+ref: student.favorite_lessons <> lesson.id
