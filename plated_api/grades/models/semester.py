@@ -47,3 +47,18 @@ class Semester(BaseModel):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.starts_at > self.ends_at:
+            raise ValueError("starts_at should be less than ends_at")
+        # check if there is already a current semester
+        # the first condition checks for existing current semester
+        # the second condition is for update save
+        current_semester = Semester.current.all()
+        if (
+            len(current_semester) >= 1
+            and current_semester[0].id != self.id
+            and self.starts_at <= date.today() <= self.ends_at
+        ):
+            raise ValueError("There should be only one current semester")
+        super().save(*args, **kwargs)
