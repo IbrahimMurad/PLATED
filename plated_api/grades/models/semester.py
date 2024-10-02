@@ -6,6 +6,7 @@ from datetime import date
 from core.models import BaseModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from grades.models import Curriculum
 
 
 class CurrentSemesterManager(models.Manager):
@@ -38,6 +39,14 @@ class Semester(BaseModel):
     )
     starts_at = models.DateField(default=date(year=2024, month=9, day=1))
     ends_at = models.DateField(default=date(year=2024, month=12, day=31))
+    curriculum = models.ForeignKey(
+        Curriculum,
+        on_delete=models.CASCADE,
+        related_name="semesters",
+        related_query_name="semester",
+        null=True,
+        blank=True,
+    )
 
     objects = models.Manager()
     current = CurrentSemesterManager()
@@ -54,7 +63,8 @@ class Semester(BaseModel):
         # check if there is already a current semester
         # the first condition checks for existing current semester
         # the second condition is for update save
-        current_semester = Semester.current.all()
+        # the third condiction is for new non-current semester
+        current_semester = Semester.current.filter(curriculum=self.curriculum)
         if (
             len(current_semester) >= 1
             and current_semester[0].id != self.id

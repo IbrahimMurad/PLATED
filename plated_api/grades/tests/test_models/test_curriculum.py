@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import date, datetime
 from uuid import UUID
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from grades.models import Curriculum, Path
+from grades.models import Curriculum, Path, Semester
 
 
 class CurriculumTestCase(TestCase):
@@ -132,3 +132,68 @@ class CurriculumPathRelationTestCase(TestCase):
         self.assertEqual(queryset2.count(), 1)
         self.assertIn(c_1, queryset2)
         self.assertNotIn(c_2, queryset2)
+
+
+class CurriculumSemesterRelationTestCase(TestCase):
+    def setUp(self) -> None:
+        self.curriculum = Curriculum.objects.create(name="Egyption National Curriculum")
+        self.s1 = Semester.objects.create(curriculum=self.curriculum)
+        self.s2 = Semester.objects.create(
+            curriculum=self.curriculum,
+            starts_at=date(2025, 2, 1),
+            ends_at=date(2025, 5, 31),
+        )
+
+    def test_curriculum_semester_relation(self):
+        self.assertEqual(self.curriculum.semesters.count(), 2)
+        self.assertIn(self.s1, self.curriculum.semesters.all())
+        self.assertIn(self.s2, self.curriculum.semesters.all())
+        self.assertEqual(self.s1.curriculum, self.curriculum)
+        self.assertEqual(self.s2.curriculum, self.curriculum)
+        self.assertEqual(
+            self.curriculum.semesters.get(starts_at__lt=date(2025, 1, 1)), self.s1
+        )
+        self.assertEqual(
+            self.curriculum.semesters.get(starts_at__gt=date(2025, 1, 1)), self.s2
+        )
+
+    def test_create_paths_from_curriculum(self):
+        c = Curriculum.objects.create(name="IGCSE", type="INTERNATIONAL")
+        s1 = c.semesters.create(
+            name="FIRST_TERM", starts_at=date(2024, 1, 1), ends_at=date(2024, 5, 31)
+        )
+        s2 = c.semesters.create(
+            name="SECOND_TERM", starts_at=date(2024, 6, 1), ends_at=date(2024, 12, 31)
+        )
+        self.assertEqual(c.semesters.count(), 2)
+        self.assertIn(s1, c.semesters.all())
+        self.assertIn(s2, c.semesters.all())
+        self.assertEqual(s1.curriculum, c)
+        self.assertEqual(s2.curriculum, c)
+
+    def test_delete_curriculum_with_semester(self):
+        self.assertEqual(self.curriculum.semesters.count(), 2)
+        self.curriculum.delete()
+        self.assertEqual(Curriculum.objects.count(), 0)
+        self.assertEqual(Semester.objects.count(), 0)
+
+    def test_get_curriculum_according_to_value_in_semester(self):
+        c_1 = Curriculum.objects.create(name="Egyptian national curriculum")
+        c_2 = Curriculum.objects.create(name="IGCSE curriculum")
+        c_1.semesters.create(
+            name="FIRST_TERM", starts_at=date(2024, 9, 1), ends_at=date(2025, 1, 31)
+        )
+        c_1.semesters.create(
+            name="SECOND_TERM", starts_at=date(2025, 2, 1), ends_at=date(2025, 5, 31)
+        )
+        c_2.semesters.create(
+            name="SUMMER_COURSE", starts_at=date(2025, 6, 1), ends_at=date(2025, 7, 31)
+        )
+        queryset1 = Curriculum.objects.filter(semester__name="FIRST_TERM")
+        self.assertEqual(queryset1.count(), 3)
+        self.assertIn(c_1, queryset1)
+        self.assertNotIn(c_2, queryset1)
+        queryset2 = Curriculum.objects.filter(semester__name="SUMMER_COURSE")
+        self.assertEqual(queryset2.count(), 1)
+        self.assertNotIn(c_1, queryset2)
+        self.assertIn(c_2, queryset2)
