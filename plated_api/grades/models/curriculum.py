@@ -12,8 +12,8 @@ class Curriculum(BaseModel):
     class CurriculumType(models.TextChoices):
         """choices for the type of curriculum"""
 
-        NATIONAL = "NATIONAL", _("National")
-        INTERNATIONAL = "INTERNATIONAL", _("International")
+        NATIONAL: tuple = "NATIONAL", _("National")
+        INTERNATIONAL: tuple = "INTERNATIONAL", _("International")
 
     name = models.CharField(
         max_length=255, unique=True

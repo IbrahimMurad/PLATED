@@ -11,7 +11,7 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         """make a full clean validation before saving"""
         self.full_clean()
         return super().save(*args, **kwargs)

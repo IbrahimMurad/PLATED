@@ -12,7 +12,7 @@ from grades.models import Curriculum
 class CurrentSemesterManager(models.Manager):
     """manager to get the currently running semester"""
 
-    def get_queryset(self):
+    def get_queryset(self) -> models.QuerySet:
         """get the current semester"""
         return (
             super()
@@ -48,8 +48,8 @@ class Semester(BaseModel):
         blank=True,
     )
 
-    objects = models.Manager()
-    current = CurrentSemesterManager()
+    objects: models.Manager = models.Manager()
+    current: CurrentSemesterManager = CurrentSemesterManager()
 
     class Meta:
         db_table = "semesters"
@@ -57,7 +57,7 @@ class Semester(BaseModel):
     def __str__(self) -> str:
         return self.name
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         if self.starts_at > self.ends_at:
             raise ValueError("starts_at should be less than ends_at")
         # check if there is already a current semester
