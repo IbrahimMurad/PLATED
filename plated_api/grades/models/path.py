@@ -3,6 +3,7 @@
 
 from core.models import BaseModel
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from grades.models.curriculum import Curriculum
 
 
@@ -12,8 +13,8 @@ class Path(BaseModel):
     class MainLanguageChoices(models.TextChoices):
         """choices for the main language of the path"""
 
-        ENGLISH = "ENGLISH", "English"
-        ARABIC = "ARABIC", "Arabic"
+        ENGLISH = "ENGLISH", _("English")
+        ARABIC = "ARABIC", _("Arabic")
 
     name = models.CharField(max_length=255)
     curriculum = models.ForeignKey(

@@ -184,7 +184,7 @@ class SemesterCurriculumRelationTestCase(TestCase):
         self.assertIn(s1, queryset)
         self.assertIn(s2, queryset)
 
-    def test_get_path_by_curriculum_name(self):
+    def test_get_path_by_curriculum_name(self) -> None:
         s1: Semester = Semester.objects.create(curriculum=self.curriculum)
         s2: Semester = Semester.objects.create(
             curriculum=self.curriculum,

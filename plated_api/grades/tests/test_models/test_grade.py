@@ -93,7 +93,7 @@ class GradeTestCase(TestCase):
 
 
 class GradeStageRelationTestCase(TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.curriculum: Curriculum = Curriculum.objects.create(
             name="Egyptian national curriculum"
         )
