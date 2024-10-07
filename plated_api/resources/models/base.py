@@ -4,13 +4,14 @@ import os
 
 from core.models import BaseModel
 from django.db import models
+from django.utils.text import slugify
 from PIL import Image
 
 
 def cover_path(instance, filename: str) -> str:
     """returns the path of the cover image"""
     img_ext = os.path.splitext(filename)[1]
-    return f"covers/{instance.__class__.__name__}/{instance.title}.{img_ext}"
+    return f"covers/{instance.__class__.__name__}/{slugify(instance.title)}.{img_ext}"
 
 
 class ResourceBase(BaseModel):
@@ -25,7 +26,6 @@ class ResourceBase(BaseModel):
     cover = models.ImageField(upload_to=cover_path, blank=True, null=True)
     syllabus_order = models.IntegerField(
         default=1,
-        unique=True,
         help_text="The order of the resource in the syllabus.",
     )
 
@@ -45,5 +45,5 @@ class ResourceBase(BaseModel):
             if image.height > 300 or image.width > 300:
                 image.thumbnail((300, 300))
                 image.save(self.cover.path)
-        except FileNotFoundError:
+        except (FileNotFoundError, ValueError):
             pass

@@ -7,7 +7,18 @@ from resources.models import ResourceBase, TextBook
 class Unit(ResourceBase):
     """unit model for units table."""
 
-    textBook = models.ForeignKey(TextBook, on_delete=models.CASCADE)
+    text_book = models.ForeignKey(
+        TextBook,
+        on_delete=models.CASCADE,
+        related_name="units",
+        related_query_name="unit",
+    )
 
     class Meta:
         db_table = "units"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["text_book", "syllabus_order"],
+                name="unique_text_book_order",
+            )
+        ]

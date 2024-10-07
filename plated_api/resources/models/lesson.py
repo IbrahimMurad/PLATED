@@ -23,7 +23,12 @@ def lesson_section_vid_path(instance, filename: str) -> str:
 class Lesson(ResourceBase):
     """Lesson model for lessons table that holds lesson details."""
 
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(
+        Chapter,
+        on_delete=models.CASCADE,
+        related_name="lessons",
+        related_query_name="lesson",
+    )
     semester = models.ForeignKey(
         Semester,
         on_delete=models.SET_NULL,
@@ -65,6 +70,12 @@ class Lesson(ResourceBase):
 
     class Meta:
         db_table = "lessons"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["chapter", "syllabus_order"],
+                name="unique_chapter_order",
+            )
+        ]
 
     def add_lesson_to_requires(self, pre_lesson) -> None:
         """validate that the pre_lesson does not have
