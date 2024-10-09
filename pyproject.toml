@@ -44,7 +44,7 @@ repository = "https://github.com/IbrahimMurad/PLATED"
 
 exclude = '/(\.git|\.mypy_cache|\.pytest_cache|\.vscode|\.venv|__pycache__)/'
 line-length = 88
-target-version = ['py38', 'py39', 'py310']
+target-version = ['py38', 'py39', 'py310', 'py311']
 
 
 [tool.isort]

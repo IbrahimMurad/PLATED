@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "grades",
     "resources",
+    "questions",
 ]
 
 MIDDLEWARE = [

@@ -196,7 +196,7 @@ class TestUnit(TestCase):
             unit=self.algebra,
             title="A chapter",
             caption="This is a chapter",
-            cover=None,  # type: ignore
+            cover=None,
             syllabus_order=2,
         )
         self.assertIsInstance(no_cover_chapter, Chapter)
@@ -204,7 +204,7 @@ class TestUnit(TestCase):
             unit=self.algebra,
             title="Another chapter",
             caption="This is another chapter",
-            cover=None,  # type: ignore
+            cover=None,
             syllabus_order=3,
         )
         self.assertIsInstance(no_cover_chapter, Chapter)
@@ -264,7 +264,7 @@ class TestUnit(TestCase):
     def test_unit_is_required(self) -> None:
         with self.assertRaises(ValidationError):
             Chapter.objects.create(
-                unit=None,
+                unit=None,  # type: ignore
                 title="A chapter",
                 caption="This is a chapter",
                 cover=create_image(),
@@ -322,4 +322,4 @@ class TestUnit(TestCase):
         )
         self.assertEqual(self.mechanics.chapters.last().title, "Newton's laws")
         self.assertEqual(self.electricity.chapters.first().title, "Coloumb's law")
-        self.assertEqual(self.electricity.hcapters.last().title, "Gauss's law")
+        self.assertEqual(self.electricity.chapters.last().title, "Gauss's law")

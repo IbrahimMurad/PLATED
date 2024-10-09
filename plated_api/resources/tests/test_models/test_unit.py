@@ -187,15 +187,15 @@ class TestUnit(TestCase):
             text_book=self.math_book1,
             title="A Unit",
             caption="This is a unit",
-            cover="",  # type: ignore
+            cover="",
             syllabus_order=9,
         )
         self.assertIsInstance(no_cover_unit, Unit)
-        no_cover_unit: Unit = Unit.objects.create(
+        no_cover_unit = Unit.objects.create(
             text_book=self.math_book1,
             title="A Unit",
             caption="This is a unit",
-            cover=None,  # type: ignore
+            cover=None,
             syllabus_order=10,
         )
         self.assertIsInstance(no_cover_unit, Unit)
@@ -254,7 +254,7 @@ class TestUnit(TestCase):
     def test_text_book_is_required(self) -> None:
         with self.assertRaises(ValidationError):
             Unit.objects.create(
-                text_book=None,
+                text_book=None,  # type: ignore
                 title="A Unit",
                 caption="This is a unit",
                 cover=create_image(),
@@ -273,7 +273,7 @@ class TestUnit(TestCase):
             cover=create_image(name="another_math_unit.png", size=(100, 100)),
             syllabus_order=3,
         )
-        math_book1_units: QuerySet = Unit.objects.filter(text_book=self.math_book1)
+        math_book1_units = Unit.objects.filter(text_book=self.math_book1)
         self.assertEqual(math_book1_units.count(), 3)
         # the first book should be the Another Math Book
         # because it is syllaus_order = 1
@@ -285,7 +285,7 @@ class TestUnit(TestCase):
         self.assertEqual(self.calculus.syllabus_order, 1)
         self.assertEqual(self.trigonometry.syllabus_order, 2)
 
-    def test_unit_with_updated_textbook(self):
+    def test_unit_with_updated_textbook(self) -> None:
         self.assertEqual(self.mechanics.text_book, self.physics_book1)
         self.mechanics.syllabus_order = 3
         self.mechanics.text_book = self.physics_book2
@@ -295,7 +295,7 @@ class TestUnit(TestCase):
         self.assertEqual(Unit.objects.filter(text_book=self.physics_book1).count(), 1)
         self.assertEqual(Unit.objects.filter(text_book=self.math_book2).count(), 2)
 
-    def test_textbook_of_a_unit(self):
+    def test_textbook_of_a_unit(self) -> None:
         self.assertEqual(self.algebra.text_book, self.math_book1)
         self.assertEqual(self.electricity.text_book, self.physics_book1)
         self.physics_book1.title = "classical physics"
@@ -304,7 +304,7 @@ class TestUnit(TestCase):
         self.assertEqual(self.electricity.text_book, self.physics_book1)
         self.assertEqual(self.electricity.text_book.title, "classical physics")
 
-    def text_all_units_from_textbook(self):
+    def text_all_units_from_textbook(self) -> None:
         self.assertEqual(self.math_book1.units.count(), 2)
         self.assertEqual(self.math_book2.units.count(), 2)
         self.assertEqual(self.physics_book1.units.count(), 2)
