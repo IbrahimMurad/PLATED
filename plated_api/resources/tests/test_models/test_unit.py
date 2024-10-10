@@ -309,11 +309,23 @@ class TestUnit(TestCase):
         self.assertEqual(self.math_book2.units.count(), 2)
         self.assertEqual(self.physics_book1.units.count(), 2)
         self.assertEqual(self.physics_book2.units.count(), 2)
-        self.assertEqual(self.math_book1.units.first().title, "Algebra")
-        self.assertEqual(self.math_book1.units.last().title, "Geometry")
-        self.assertEqual(self.math_book2.units.first().title, "Calculus")
-        self.assertEqual(self.math_book2.units.last().title, "Trigonometry")
-        self.assertEqual(self.physics_book1.units.first().title, "Mechanics")
-        self.assertEqual(self.physics_book1.units.last().title, "Electricity")
-        self.assertEqual(self.physics_book2.units.first().title, "Waves")
-        self.assertEqual(self.physics_book2.units.last().title, "Optics")
+        self.assertEqual(self.math_book1.units.first().title, "Algebra")  # type: ignore
+        self.assertEqual(self.math_book1.units.last().title, "Geometry")  # type: ignore
+        self.assertEqual(
+            self.math_book2.units.first().title, "Calculus"  # type: ignore
+        )
+        self.assertEqual(
+            self.math_book2.units.last().title, "Trigonometry"  # type: ignore
+        )
+        self.assertEqual(
+            self.physics_book1.units.first().title, "Mechanics"  # type: ignore
+        )
+        self.assertEqual(
+            self.physics_book1.units.last().title, "Electricity"  # type: ignore
+        )
+        self.assertEqual(
+            self.physics_book2.units.first().title, "Waves"  # type: ignore
+        )
+        self.assertEqual(
+            self.physics_book2.units.last().title, "Optics"  # type: ignore
+        )

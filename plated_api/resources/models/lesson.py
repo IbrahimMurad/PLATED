@@ -70,12 +70,8 @@ class Lesson(ResourceBase):
 
     class Meta:
         db_table = "lessons"
-        constraints = [
-            models.UniqueConstraint(
-                fields=["chapter", "syllabus_order"],
-                name="unique_chapter_order",
-            )
-        ]
+        ordering = ["chapter", "syllabus_order"]
+        unique_together = ["chapter", "syllabus_order"]
 
     def add_lesson_to_requires(self, pre_lesson) -> None:
         """validate that the pre_lesson does not have

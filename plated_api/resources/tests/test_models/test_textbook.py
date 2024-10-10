@@ -210,9 +210,9 @@ class TestTextBook(TestCase):
         self.assertEqual(math_books[0].title, "Another Math Book")
 
     def test_textbook_has_a_syllabus_order(self) -> None:
-        self.assertIsNone(self.math_book.syllabus_order)
-        self.assertIsNone(self.physics_book.syllabus_order)
-        self.assertIsNone(self.english_book.syllabus_order)
+        self.assertIsNone(self.math_book.syllabus_order)  # type: ignore
+        self.assertIsNone(self.physics_book.syllabus_order)  # type: ignore
+        self.assertIsNone(self.english_book.syllabus_order)  # type: ignore
 
     def test_textbook_with_updated_subject(self):
         self.assertEqual(self.math_book.subject, self.math)

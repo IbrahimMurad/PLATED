@@ -16,9 +16,5 @@ class Unit(ResourceBase):
 
     class Meta:
         db_table = "units"
-        constraints = [
-            models.UniqueConstraint(
-                fields=["text_book", "syllabus_order"],
-                name="unique_text_book_order",
-            )
-        ]
+        ordering = ["text_book", "syllabus_order"]
+        unique_together = ["text_book", "syllabus_order"]

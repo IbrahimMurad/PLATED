@@ -318,8 +318,15 @@ class TestUnit(TestCase):
         self.assertEqual(self.mechanics.chapters.count(), 3)
         self.assertEqual(self.electricity.chapters.count(), 2)
         self.assertEqual(
-            self.mechanics.chapters.first().title, "motion in one dimension"
+            self.mechanics.chapters.first().title,  # type: ignore
+            "motion in one dimension",
         )
-        self.assertEqual(self.mechanics.chapters.last().title, "Newton's laws")
-        self.assertEqual(self.electricity.chapters.first().title, "Coloumb's law")
-        self.assertEqual(self.electricity.chapters.last().title, "Gauss's law")
+        self.assertEqual(
+            self.mechanics.chapters.last().title, "Newton's laws"  # type: ignore
+        )
+        self.assertEqual(
+            self.electricity.chapters.first().title, "Coloumb's law"  # type: ignore
+        )
+        self.assertEqual(
+            self.electricity.chapters.last().title, "Gauss's law"  # type: ignore
+        )

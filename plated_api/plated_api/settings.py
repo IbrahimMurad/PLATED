@@ -4,7 +4,7 @@ Django settings for plated_api project.
 
 from pathlib import Path
 
-import environ
+import environ  # type: ignore
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -23,10 +23,10 @@ class Question(BaseModel):
     class Difficulty(models.TextChoices):
         """Difficulty choices for questions"""
 
-        EASY: tuple = "easy", _("Easy")
-        MEDIUM: tuple = "medium", _("Medium")
-        HARD: tuple = "hard", _("Hard")
-        VERY_HARD: tuple = "very hard", _("Very Hard")
+        EASY: tuple = "EASY", _("Easy")
+        MEDIUM: tuple = "MEDIUM", _("Medium")
+        HARD: tuple = "HARD", _("Hard")
+        VERY_HARD: tuple = "VERY HARD", _("Very Hard")
 
     lesson = models.ForeignKey(
         Lesson,
@@ -36,9 +36,12 @@ class Question(BaseModel):
     )
     type = models.ForeignKey(
         Type,
-        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name="questions",
         related_query_name="question",
+        default=None,
     )
     difficulty = models.CharField(
         max_length=32, choices=Difficulty.choices, default=Difficulty.EASY
@@ -52,11 +55,13 @@ class Question(BaseModel):
         null=True,
         blank=True,
         help_text="Question figure (diagram, graph, etc.)",
+        default=None,
     )
 
     class Meta:
         db_table = "questions"
         ordering = ["?"]
+        indexes = [models.Index(fields=["difficulty"])]
 
     def __str__(self) -> str:
         return self.body[:50]
