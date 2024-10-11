@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "grades",
     "resources",
     "questions",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,7 @@ MEDIA_ROOT = env("MEDIA_ROOT", default=str(BASE_DIR / "media"))
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Default user model
+AUTH_USER_MODEL = "users.User"
