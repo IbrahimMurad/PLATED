@@ -9,7 +9,7 @@ from users.models import Student, Teacher, User
 
 def get_group(name: str) -> Group:
     """Get a group by name"""
-    return Group.objects.get(name=name)
+    return Group.objects.get_or_create(name=name)[0]
 
 
 @receiver(post_save, sender=Student)
@@ -30,4 +30,4 @@ def add_user_to_teacher_group(sender, instance, created, **kwargs):
 def add_user_to_admin_group(sender, instance, created, **kwargs):
     """Add user to admin group if the user's role is admin"""
     if created and instance.role == User.Role.ADMIN:
-        instance.groups.add(get_group("Admin"))
+        instance.groups.add(get_group(name="Admin"))
