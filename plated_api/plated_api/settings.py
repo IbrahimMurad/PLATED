@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "resources",
     "questions",
     "users",
+    "classes",
 ]
 
 MIDDLEWARE = [

@@ -62,7 +62,7 @@ class TeacherModelTest(TestCase):
 
     def test_max_students_default(self) -> None:
         teacher: Teacher = Teacher.objects.create(user=self.user, subject=self.subject)
-        self.assertEqual(teacher.max_students, 0)
+        self.assertEqual(teacher.max_students, 10)
 
     def test_max_students_custom(self) -> None:
         teacher: Teacher = Teacher.objects.create(

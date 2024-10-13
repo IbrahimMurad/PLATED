@@ -28,11 +28,11 @@ class Student(BaseModel):
         verbose_name = "Student"
         verbose_name_plural = "Students"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.user.username
 
-    def get_full_name(self):
+    def get_full_name(self) -> str:
         return self.user.get_full_name()
 
-    def get_short_name(self):
+    def get_short_name(self) -> str:
         return self.user.get_short_name()

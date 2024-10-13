@@ -30,14 +30,14 @@ class User(AbstractUser):
         verbose_name = "User"
         verbose_name_plural = "Users"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.username
 
-    def is_student(self):
+    def is_student(self) -> bool:
         return self.role == self.Role.STUDENT
 
-    def is_teacher(self):
+    def is_teacher(self) -> bool:
         return self.role == self.Role.TEACHER
 
-    def is_admin(self):
+    def is_admin(self) -> bool:
         return self.role == self.Role.ADMIN
