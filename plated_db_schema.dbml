@@ -1,7 +1,7 @@
 Table users {
   id uuid [primary key]
-  created_at timestamp [default: `now()`, not null]
-  updated_at timestamp [default: `now()`, not null]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
   username varchar [not null]
   first_name varchar [null]
   last_name varchar [null]
